@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Александр Александрович Саенко](https://up.htmlacademy.ru/javascript/16/user/843141).
-* Наставник: `Неизвестно`.
+* Наставник: [Алексей Балесный] (https://htmlacademy.ru/profile/id221665) .
 
 ---
 
