@@ -18,7 +18,7 @@ var makeAvatarImg = function (number) {
 };
 
 var makeTitle = function (array) {
-  titleDescription = array[0];
+  titleDescription = array;
   return titleDescription;
 };
 
@@ -76,60 +76,33 @@ var makeAddress = function () {
   return location.x + ',' + location.y;
 };
 
-// var author = {
-//   avatar: makeAvatarImg(1)
-// };
-
-// var offer = {
-//   title: makeTitle(shuffleTitleArray[0]),
-//   address: makeAddress(),
-//   price: makePrice(),
-//   type: makeType(),
-//   rooms: makeRooms(),
-//   guests: makeGuests(),
-//   checkin: makeCheckInOut(),
-//   checkout: makeCheckInOut(),
-//   features: makeFeatures(),
-//   description: '',
-//   photos: makePhotos()
-// };
-
-var rentObject = {
-  'author': {
-    avatar: makeAvatarImg(shuffleAvatarNumbers[0])
-  },
-  'offer': {
-    title: makeTitle(shuffleTitleArray),
-    address: makeAddress(),
-    price: makePrice(),
-    type: makeType(),
-    rooms: makeRooms(),
-    guests: makeGuests(),
-    checkin: makeCheckInOut(),
-    checkout: makeCheckInOut(),
-    features: makeFeatures(),
-    description: '',
-    photos: makePhotos()
-  },
-  'location': {
-    x: getRandom(1, SIZE_X),
-    y: getRandom(SIZE_Y_MIN, SIZE_Y_MAX)
-  }
+var rentObects = [];
+for (var i = 0; i < 8; i++) {
+  var rentObject = {
+    'author': {
+      avatar: makeAvatarImg(shuffleAvatarNumbers[i])
+    },
+    'offer': {
+      title: makeTitle(shuffleTitleArray[i]),
+      address: makeAddress(),
+      price: makePrice(),
+      type: makeType(),
+      rooms: makeRooms(),
+      guests: makeGuests(),
+      checkin: makeCheckInOut(),
+      checkout: makeCheckInOut(),
+      features: makeFeatures(),
+      description: '',
+      photos: makePhotos()
+    },
+    'location': {
+      x: getRandom(1, SIZE_X),
+      y: getRandom(SIZE_Y_MIN, SIZE_Y_MAX)
+    }
+  };
+  rentObects[i] = rentObject;
 };
 
-console.log(rentObject);
+console.log(rentObects);
+console.log(rentObects[0].location.x);
 
-
-
-// console.log(makeAvatarImg(shuffleNumbers[0]));
-// console.log(makeTitle(shuffleTitleArray));
-// console.log(makeAddress());
-// console.log(makePrice());
-// console.log(makeType());
-// console.log(makeRooms());
-// console.log(makeGuests());
-// console.log(makeCheckInOut());
-// console.log(makeFeatures());
-// console.log(makePhotos());
-// console.log(location.x);
-// console.log(location.y);
