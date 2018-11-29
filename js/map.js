@@ -1,3 +1,5 @@
+'use strict';
+
 var SIZE_X = 1200;
 var SIZE_Y_MIN = 130;
 var SIZE_Y_MAX = 630;
@@ -18,7 +20,7 @@ var makeAvatarImg = function (number) {
 };
 
 var makeTitle = function (array) {
-  titleDescription = array;
+  var titleDescription = array;
   return titleDescription;
 };
 
@@ -32,7 +34,7 @@ var makePrice = function () {
 
 var makeType = function () {
   var k = getRandom(0, 3)
-  houseType = typeArray[k]
+  var houseType = typeArray[k]
   return houseType;
 };
 
@@ -46,7 +48,7 @@ var makeGuests = function () {
 
 var makeCheckInOut = function () {
   var k = getRandom(0, 2)
-  times = timesArray[k]
+  var times = timesArray[k]
   return times;
 };
 
@@ -67,24 +69,27 @@ var makePhotos = function () {
   return photosArray;
 };
 
-var location = {
-  x: getRandom(1, SIZE_X),
-  y: getRandom(SIZE_Y_MIN, SIZE_Y_MAX)
-};
-
-var makeAddress = function () {
-  return location.x + ',' + location.y;
+var makeLocationAndAddress = function() {
+  var x = getRandom(1, SIZE_X);
+  var y = getRandom(SIZE_Y_MIN, SIZE_Y_MAX);
+  var location = {
+    'x': x,
+    'y': y,
+    'address': x + ',' + y
+  };
+  return location;
 };
 
 var rentObects = [];
 for (var i = 0; i < 8; i++) {
+  var rentLocation = makeLocationAndAddress();
   var rentObject = {
     'author': {
       avatar: makeAvatarImg(shuffleAvatarNumbers[i])
     },
     'offer': {
       title: makeTitle(shuffleTitleArray[i]),
-      address: makeAddress(),
+      address: rentLocation.address,
       price: makePrice(),
       type: makeType(),
       rooms: makeRooms(),
@@ -96,17 +101,21 @@ for (var i = 0; i < 8; i++) {
       photos: makePhotos()
     },
     'location': {
-      x: getRandom(1, SIZE_X),
-      y: getRandom(SIZE_Y_MIN, SIZE_Y_MAX)
+      x: rentLocation.x,
+      y: rentLocation.y
     }
   };
   rentObects[i] = rentObject;
 };
 
 console.log(rentObects);
-console.log(rentObects[0].location.x);
+console.log(rentObects[0].author.avatar);
 
 var pin = document.querySelector('#pin');
-var avataiImgTemplate = pin.content.querySelector('img');
-avataiImgTemplate.src = rentObects[0].author.avatar;
-console.log(avataiImgTemplate);
+var avatarImgTemplate = pin.content.querySelector('img');
+var pinLocation = pin.content.querySelector('button')
+pinLocation.style.cssText = 'left:' + rentObects[0].location.x + 'px';
+avatarImgTemplate.src = rentObects[0].author.avatar;
+avatarImgTemplate.alt = rentObects[0].offer.title;
+console.log(avatarImgTemplate);
+console.log(pinLocation);
