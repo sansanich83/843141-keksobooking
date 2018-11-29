@@ -106,3 +106,7 @@ for (var i = 0; i < 8; i++) {
 console.log(rentObects);
 console.log(rentObects[0].location.x);
 
+var pin = document.querySelector('#pin');
+var avataiImgTemplate = pin.content.querySelector('img');
+avataiImgTemplate.src = rentObects[0].author.avatar;
+console.log(avataiImgTemplate);
