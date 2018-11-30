@@ -108,14 +108,30 @@ for (var i = 0; i < 8; i++) {
   rentObects[i] = rentObject;
 };
 
-console.log(rentObects);
-console.log(rentObects[0].author.avatar);
+var pinTemplate = document.querySelector('#pin');
+var mapPins = document.querySelector('.map__pins');
+// var pinElement = pinTemplate.content.cloneNode(true);
 
-var pin = document.querySelector('#pin');
-var avatarImgTemplate = pin.content.querySelector('img');
-var pinLocation = pin.content.querySelector('button')
-pinLocation.style.cssText = 'left:' + rentObects[0].location.x + 'px';
-avatarImgTemplate.src = rentObects[0].author.avatar;
-avatarImgTemplate.alt = rentObects[0].offer.title;
-console.log(avatarImgTemplate);
-console.log(pinLocation);
+// var avatarImgTemplate = pinElement.querySelector('img');
+// var pinLocation = pinElement.querySelector('button');
+
+// pinLocation.style.cssText = 'left:' + rentObects[0].location.x + 'px;' + 'top:' + rentObects[0].location.y + 'px;';
+// avatarImgTemplate.src = rentObects[0].author.avatar;
+// avatarImgTemplate.alt = rentObects[0].offer.title;
+
+// mapPins.appendChild(pinElement);
+
+var makeNewMapPin = function(amountPins) {
+  var pinElement = pinTemplate.content.cloneNode(true);
+
+  var avatarImgTemplate = pinElement.querySelector('img');
+  var pinLocation = pinElement.querySelector('button');
+
+  pinLocation.style.cssText = 'left:' + rentObects[0].location.x + 'px;' + 'top:' + rentObects[0].location.y + 'px;';
+  avatarImgTemplate.src = rentObects[0].author.avatar;
+  avatarImgTemplate.alt = rentObects[0].offer.title;
+
+  mapPins.appendChild(pinElement);
+};
+
+  makeNewMapPin();
