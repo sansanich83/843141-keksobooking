@@ -201,7 +201,7 @@ var popupAvatar = cardElement.querySelector('.popup__avatar');
 
 // mapFaded.insertBefore(cardElement, mapFilters);
 
-var renderPopup = function (Object) {
+var renderPopup = function (object) {
 
 popupTitle.textContent = object.offer.title;
 popupAddress.textContent = object.offer.address;
