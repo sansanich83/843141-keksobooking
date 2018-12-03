@@ -5,29 +5,39 @@ var SIZE_Y_MIN = 130;
 var SIZE_Y_MAX = 630;
 var PRICE_MIN = 1000;
 var PRICE_MAX = 10000;
-var titleArray = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
-var shuffleTitleArray = titleArray.sort(function () { return 0.5 - Math.random() });
-var typeArray = ['palace', 'flat', 'house', 'bungalo'];
+var NUMBER_OF_TYPES = 4;
+var MAX_GUEST = 5;
+var MAX_ROOM = 6;
+var MAX_FEATURES = 6;
+var titles = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
+
+var makeShuffleArray = function (array) {
+  var shuffleArray = array.sort(function () { return 0.5 - Math.random() });
+  return shuffleArray;
+};
+
+var shuffletitles = makeShuffleArray(titles);
+var types = ['palace', 'flat', 'house', 'bungalo'];
+var NUMBER_OF_TYPES = types.length - 1;
+
 var typeMapping = {
   palace: 'Дворец',
   flat: 'Квартира',
   house: 'Дом',
   bungalo: 'Бунгало'
 };
-var timesArray = ['12:00', '13:00', '14:00'];
-var featuresArray = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-var photosArray = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
+
+var times = ['12:00', '13:00', '14:00'];
+var NUMBER_OF_TIMES = times.length - 1;
+var features = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+var shuffleFeatures = makeShuffleArray(features);
+var photos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 var avatarNumbers = [1, 2, 3, 4, 5, 6, 7, 8];
-var shuffleAvatarNumbers = avatarNumbers.sort(function () { return 0.5 - Math.random() });
+var shuffleAvatarNumbers = makeShuffleArray(avatarNumbers);
 
 var makeAvatarImg = function (number) {
   var avatarImg = 'img/avatars/user' + '0' + number + '.png'
   return avatarImg;
-};
-
-var makeTitle = function (array) {
-  var titleDescription = array;
-  return titleDescription;
 };
 
 var getRandom = function (min, max) {
@@ -43,40 +53,37 @@ var makePrice = function () {
 };
 
 var makeType = function () {
-  var k = getRandom(0, 3)
-  var houseType = typeArray[k]
+  var randomType = getRandom(0, NUMBER_OF_TYPES);
+  var houseType = types[randomType];
   return houseType;
 };
 
 var makeRooms = function () {
-  return getRandom(1, 6);
+  return getRandom(1, MAX_ROOM);
 };
 
 var makeGuests = function () {
-  return getRandom(1, 4);
+  return getRandom(1, MAX_GUEST);
 };
 
 var makeCheckInOut = function () {
-  var k = getRandom(0, 2)
-  var times = timesArray[k]
-  return times;
+  var randomTimeIndex = getRandom(0, NUMBER_OF_TIMES);
+  var randomTimes = times[randomTimeIndex];
+  return randomTimes;
 };
 
 var makeFeatures = function () {
-  var shuffleFeatures = featuresArray.sort(function () {
-    return 0.5 - Math.random()
-  });
-  var k = getRandom(1, 6);
+  var randomNumberOfFeature = getRandom(1, MAX_FEATURES);
   var features = [];
-  for (var i = 0; i < k; i++) {
+  for (var i = 0; i < randomNumberOfFeature; i++) {
     features[i] = shuffleFeatures[i];
   };
   return features;
 };
 
 var makePhotos = function () {
-  photosArray = photosArray.sort(function () { return 0.5 - Math.random() });
-  return photosArray;
+  var shufflePhotos = makeShuffleArray(photos);
+  return shufflePhotos;
 };
 
 var makeLocationAndAddress = function () {
@@ -98,7 +105,7 @@ for (var i = 0; i < 8; i++) {
       avatar: makeAvatarImg(shuffleAvatarNumbers[i])
     },
     'offer': {
-      title: makeTitle(shuffleTitleArray[i]),
+      title: shuffletitles[i],
       address: rentLocation.address,
       price: makePrice(),
       type: makeType(),
@@ -156,32 +163,72 @@ var popupDescription = cardElement.querySelector('.popup__description');
 var popupPhotos = cardElement.querySelector('.popup__photos');
 var popupAvatar = cardElement.querySelector('.popup__avatar');
 
-popupTitle.textContent = rentObects[0].offer.title;
-popupAddress.textContent = rentObects[0].offer.address;
-popupPrice.textContent = rentObects[0].offer.price + ' ₽/ночь';
-popupType.textContent = typeMapping[rentObects[0].offer.type];
-popupCapacity.textContent = rentObects[0].offer.rooms + ' комнаты для ' + rentObects[0].offer.guests + ' гостей';
-popupTime.textContent = 'Заезд после ' + rentObects[0].offer.checkin + ' , выезд до ' + rentObects[0].offer.checkout;
+// popupTitle.textContent = rentObects[0].offer.title;
+// popupAddress.textContent = rentObects[0].offer.address;
+// popupPrice.textContent = rentObects[0].offer.price + ' ₽/ночь';
+// popupType.textContent = typeMapping[rentObects[0].offer.type];
+// popupCapacity.textContent = rentObects[0].offer.rooms + ' комнаты для ' + rentObects[0].offer.guests + ' гостей';
+// popupTime.textContent = 'Заезд после ' + rentObects[0].offer.checkin + ' , выезд до ' + rentObects[0].offer.checkout;
+
+// var makeFeatureLi = function () {
+//   var featuresList = rentObects[0].offer.features;
+//   for (i = 0; i < featuresList.length; i++) {
+//     var featureLi = document.createElement('li');
+//     var featureClass = 'popup__feature--' + rentObects[0].offer.features[i];
+//     featureLi.classList.add(featureClass, 'popup__feature');
+//     popupFeatures.appendChild(featureLi);
+//   };
+// };
+// makeFeatureLi();
+
+// popupDescription.textContent = rentObects[0].offer.description;
+
+// var makePhotoImg = function () {
+//   var photoList = rentObects[0].offer.photos;
+//   for (i = 0; i < photoList.length; i++) {
+//     var photoImg = document.createElement('img');
+//     photoImg.classList.add('popup__photo');
+//     photoImg.src = rentObects[0].offer.photos[i];
+//     photoImg.width = 45;
+//     photoImg.height = 40;
+//     photoImg.alt = 'Фотография жилья';
+//     popupPhotos.appendChild(photoImg);
+//   };
+// };
+// makePhotoImg();
+
+// popupAvatar.src = rentObects[0].author.avatar;
+
+// mapFaded.insertBefore(cardElement, mapFilters);
+
+var renderPopup = function (Object) {
+
+popupTitle.textContent = object.offer.title;
+popupAddress.textContent = object.offer.address;
+popupPrice.textContent = object.offer.price + ' ₽/ночь';
+popupType.textContent = typeMapping[object.offer.type];
+popupCapacity.textContent = object.offer.rooms + ' комнаты для ' + object.offer.guests + ' гостей';
+popupTime.textContent = 'Заезд после ' + object.offer.checkin + ' , выезд до ' + object.offer.checkout;
 
 var makeFeatureLi = function () {
-  var featuresList = rentObects[0].offer.features;
+  var featuresList = object.offer.features;
   for (i = 0; i < featuresList.length; i++) {
     var featureLi = document.createElement('li');
-    var featureClass = 'popup__feature--' + rentObects[0].offer.features[i];
+    var featureClass = 'popup__feature--' + object.offer.features[i];
     featureLi.classList.add(featureClass, 'popup__feature');
     popupFeatures.appendChild(featureLi);
   };
 };
 makeFeatureLi();
 
-popupDescription.textContent = rentObects[0].offer.description;
+popupDescription.textContent = object.offer.description;
 
 var makePhotoImg = function () {
-  var photoList = rentObects[0].offer.photos;
+  var photoList = object.offer.photos;
   for (i = 0; i < photoList.length; i++) {
     var photoImg = document.createElement('img');
     photoImg.classList.add('popup__photo');
-    photoImg.src = rentObects[0].offer.photos[i];
+    photoImg.src = object.offer.photos[i];
     photoImg.width = 45;
     photoImg.height = 40;
     photoImg.alt = 'Фотография жилья';
@@ -190,6 +237,8 @@ var makePhotoImg = function () {
 };
 makePhotoImg();
 
-popupAvatar.src = rentObects[0].author.avatar;
-
+popupAvatar.src = object.author.avatar;
 mapFaded.insertBefore(cardElement, mapFilters);
+};
+
+renderPopup(rentObects[0]);
