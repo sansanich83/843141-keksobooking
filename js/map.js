@@ -137,7 +137,7 @@ var makeNewMapPin = function (amountPins) {
     var avatarImgTemplate = pinElement.querySelector('img');
     var pinLocation = pinElement.querySelector('button');
 
-    pinLocation.style.cssText = 'left:' + rentObects[i].location.x + 'px;' + 'top:' + rentObects[i].location.y + 'px;';
+    pinLocation.style.cssText = 'left:' + (rentObects[i].location.x +25) + 'px;' + 'top:' + (rentObects[i].location.y + 70)+ 'px;';
     avatarImgTemplate.src = rentObects[i].author.avatar;
     avatarImgTemplate.alt = rentObects[i].offer.title;
 
