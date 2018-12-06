@@ -129,13 +129,26 @@ for (var i = 0; i < 8; i++) {
 
 var mapFaded = document.querySelector('.map');
 var mapPinMain = document.querySelector('.map__pin--main');
-
 var activateMap = function () {
   mapFaded.classList.remove('map--faded');
 };
 
-mapPinMain.addEventListener('mouseup', function(){
+var toggleFieldsDesabled = function (onOff) {
+  var selects = document.querySelectorAll('select');
+  var fieldSets = document.querySelectorAll('fieldset');
+  for (var i = 0; i < selects.length; i++) {
+    selects[i].disabled = onOff;
+  };
+  for (var j = 0; j < fieldSets.length; j++) {
+    fieldSets[j].disabled = onOff;
+  };
+};
+
+toggleFieldsDesabled(1);
+
+mapPinMain.addEventListener('mouseup', function () {
   activateMap();
+  toggleFieldsDesabled()
 });
 
 var pinTemplate = document.querySelector('#pin');
@@ -160,7 +173,7 @@ var makeNewMapPin = function (amountPins) {
 makeNewMapPin(8);
 
 var cardTemplate = document.querySelector('#card');
-var mapFilters = document.querySelector('.map__filters-container');
+var mapFiltersConteiner = document.querySelector('.map__filters-container');
 
 var cardElement = cardTemplate.content.cloneNode(true);
 var popupTitle = cardElement.querySelector('.popup__title');
@@ -210,7 +223,7 @@ var renderPopup = function (object) {
   makePhotoImg();
 
   popupAvatar.src = object.author.avatar;
-  mapFaded.insertBefore(cardElement, mapFilters);
+  mapFaded.insertBefore(cardElement, mapFiltersConteiner);
 };
 
 renderPopup(rentObects[0]);
