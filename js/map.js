@@ -128,7 +128,16 @@ for (var i = 0; i < 8; i++) {
 };
 
 var mapFaded = document.querySelector('.map');
-mapFaded.classList.remove('map--faded');
+var mapPinMain = document.querySelector('.map__pin--main');
+
+var activateMap = function () {
+  mapFaded.classList.remove('map--faded');
+};
+
+mapPinMain.addEventListener('mouseup', function(){
+  activateMap();
+});
+
 var pinTemplate = document.querySelector('#pin');
 var mapPins = document.querySelector('.map__pins');
 var pinsFragment = document.createDocumentFragment();
@@ -139,7 +148,7 @@ var makeNewMapPin = function (amountPins) {
     var avatarImgTemplate = pinElement.querySelector('img');
     var pinLocation = pinElement.querySelector('button');
 
-    pinLocation.style.cssText = 'left:' + (rentObects[i].location.x + X_HALF_OF_PIN) + 'px;' + 'top:' + (rentObects[i].location.y + Y_OF_PIN) + 'px;';
+    pinLocation.style.cssText = 'left:' + (rentObects[i].location.x - X_HALF_OF_PIN) + 'px;' + 'top:' + (rentObects[i].location.y - Y_OF_PIN) + 'px;';
     avatarImgTemplate.src = rentObects[i].author.avatar;
     avatarImgTemplate.alt = rentObects[i].offer.title;
 
