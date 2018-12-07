@@ -129,11 +129,13 @@ for (var i = 0; i < 8; i++) {
 
 var mapFaded = document.querySelector('.map');
 var mapPinMain = document.querySelector('.map__pin--main');
+var adForm = document.querySelector('.ad-form');
 var activateMap = function () {
+  adForm.classList.remove('ad-form--disabled')
   mapFaded.classList.remove('map--faded');
 };
 
-var toggleFieldsDesabled = function (onOff) {
+var toggleFieldsDesable = function (onOff) {
   var selects = document.querySelectorAll('select');
   var fieldSets = document.querySelectorAll('fieldset');
   for (var i = 0; i < selects.length; i++) {
@@ -144,15 +146,10 @@ var toggleFieldsDesabled = function (onOff) {
   };
 };
 
-toggleFieldsDesabled(1);
-
-mapPinMain.addEventListener('mouseup', function () {
-  activateMap();
-  toggleFieldsDesabled()
-});
+toggleFieldsDesable(1);
 
 var pinTemplate = document.querySelector('#pin');
-var mapPins = document.querySelector('.map__pins');
+var mapPinsConteiner = document.querySelector('.map__pins');
 var pinsFragment = document.createDocumentFragment();
 
 var makeNewMapPin = function (amountPins) {
@@ -167,10 +164,8 @@ var makeNewMapPin = function (amountPins) {
 
     pinsFragment.appendChild(pinElement);
   }
-  mapPins.appendChild(pinsFragment);
+  mapPinsConteiner.appendChild(pinsFragment);
 };
-
-makeNewMapPin(8);
 
 var cardTemplate = document.querySelector('#card');
 var mapFiltersConteiner = document.querySelector('.map__filters-container');
@@ -226,4 +221,36 @@ var renderPopup = function (object) {
   mapFaded.insertBefore(cardElement, mapFiltersConteiner);
 };
 
-renderPopup(rentObects[0]);
+var press = function () {
+  var mapPins = document.querySelectorAll('.map__pin');
+  mapPins[1].addEventListener('click', function () {
+    console.log('нажал')
+  });
+};
+
+mapPinMain.addEventListener('mouseup', function () {
+  activateMap();
+  toggleFieldsDesable();
+  makeNewMapPin(8);
+  press();
+});
+
+
+var fillAddress = function () {
+  var mapPin = document.querySelector('.map__pin--main');
+  var positionMapPin = mapPin.getBoundingClientRect();
+  var address = document.querySelector('#address');
+  address.placeholder = positionMapPin.x + ',' + positionMapPin.y;
+};
+
+fillAddress();
+
+
+
+
+
+
+
+
+
+// renderPopup(rentObects[0]);
