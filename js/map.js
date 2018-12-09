@@ -5,7 +5,6 @@ var SIZE_Y_MIN = 130;
 var SIZE_Y_MAX = 630;
 var PRICE_MIN = 1000;
 var PRICE_MAX = 10000;
-var NUMBER_OF_TYPES = 4;
 var MAX_GUEST = 5;
 var MAX_ROOM = 6;
 var MAX_FEATURES = 6;
@@ -31,14 +30,14 @@ var typeMapping = {
 
 var times = ['12:00', '13:00', '14:00'];
 var NUMBER_OF_TIMES = times.length - 1;
-var features = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-var shuffleFeatures = makeShuffleArray(features);
+var houseFeatures = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+var shuffleFeatures = makeShuffleArray(houseFeatures);
 var photos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 var avatarNumbers = [1, 2, 3, 4, 5, 6, 7, 8];
 var shuffleAvatarNumbers = makeShuffleArray(avatarNumbers);
 
 var makeAvatarImg = function (number) {
-  var avatarImg = 'img/avatars/user' + '0' + number + '.png'
+  var avatarImg = 'img/avatars/user' + '0' + number + '.png';
   return avatarImg;
 };
 
@@ -75,11 +74,11 @@ var makeCheckInOut = function () {
 };
 
 var makeFeatures = function () {
-  var randomNumberOfFeature = getRandom(1, MAX_FEATURES);
   var features = [];
+  var randomNumberOfFeature = getRandom(1, MAX_FEATURES);
   for (var i = 0; i < randomNumberOfFeature; i++) {
     features[i] = shuffleFeatures[i];
-  };
+  }
   return features;
 };
 
@@ -125,13 +124,13 @@ for (var i = 0; i < 8; i++) {
     }
   };
   rentObects[i] = rentObject;
-};
+}
 
 var mapFaded = document.querySelector('.map');
 var mapPinMain = document.querySelector('.map__pin--main');
 var adForm = document.querySelector('.ad-form');
 var activateMap = function () {
-  adForm.classList.remove('ad-form--disabled')
+  adForm.classList.remove('ad-form--disabled');
   mapFaded.classList.remove('map--faded');
 };
 
@@ -140,10 +139,10 @@ var toggleFieldsDesable = function (onOff) {
   var fieldSets = document.querySelectorAll('fieldset');
   for (var i = 0; i < selects.length; i++) {
     selects[i].disabled = onOff;
-  };
+  }
   for (var j = 0; j < fieldSets.length; j++) {
     fieldSets[j].disabled = onOff;
-  };
+  }
 };
 
 toggleFieldsDesable(1);
@@ -167,22 +166,20 @@ var makeNewMapPin = function (amountPins) {
   mapPinsConteiner.appendChild(pinsFragment);
 };
 
-var cardTemplate = document.querySelector('#card');
-var mapFiltersConteiner = document.querySelector('.map__filters-container');
-
-var cardElement = cardTemplate.content.cloneNode(true);
-var popupTitle = cardElement.querySelector('.popup__title');
-var popupAddress = cardElement.querySelector('.popup__text--address');
-var popupPrice = cardElement.querySelector('.popup__text--price');
-var popupType = cardElement.querySelector('.popup__type');
-var popupCapacity = cardElement.querySelector('.popup__text--capacity');
-var popupTime = cardElement.querySelector('.popup__text--time');
-var popupFeatures = cardElement.querySelector('.popup__features');
-var popupDescription = cardElement.querySelector('.popup__description');
-var popupPhotos = cardElement.querySelector('.popup__photos');
-var popupAvatar = cardElement.querySelector('.popup__avatar');
-
 var renderPopup = function (object) {
+  var cardTemplate = document.querySelector('#card');
+  var mapFiltersConteiner = document.querySelector('.map__filters-container');
+  var cardElement = cardTemplate.content.cloneNode(true);
+  var popupTitle = cardElement.querySelector('.popup__title');
+  var popupAddress = cardElement.querySelector('.popup__text--address');
+  var popupPrice = cardElement.querySelector('.popup__text--price');
+  var popupType = cardElement.querySelector('.popup__type');
+  var popupCapacity = cardElement.querySelector('.popup__text--capacity');
+  var popupTime = cardElement.querySelector('.popup__text--time');
+  var popupFeatures = cardElement.querySelector('.popup__features');
+  var popupDescription = cardElement.querySelector('.popup__description');
+  var popupPhotos = cardElement.querySelector('.popup__photos');
+  var popupAvatar = cardElement.querySelector('.popup__avatar');
   popupTitle.textContent = object.offer.title;
   popupAddress.textContent = object.offer.address;
   popupPrice.textContent = object.offer.price + ' ₽/ночь';
@@ -197,7 +194,7 @@ var renderPopup = function (object) {
       var featureClass = 'popup__feature--' + object.offer.features[i];
       featureLi.classList.add(featureClass, 'popup__feature');
       popupFeatures.appendChild(featureLi);
-    };
+    }
   };
   makeFeatureLi();
 
@@ -213,7 +210,7 @@ var renderPopup = function (object) {
       photoImg.height = 40;
       photoImg.alt = 'Фотография жилья';
       popupPhotos.appendChild(photoImg);
-    };
+    }
   };
   makePhotoImg();
 
@@ -221,20 +218,36 @@ var renderPopup = function (object) {
   mapFaded.insertBefore(cardElement, mapFiltersConteiner);
 };
 
-var press = function () {
-  var mapPins = document.querySelectorAll('.map__pin');
-  mapPins[1].addEventListener('click', function () {
-    console.log('нажал')
+var onMapPinClick = function (mapPinsOne, rentObectsOne) {
+
+  mapPinsOne.addEventListener('click', function () {
+    var mapCard = document.querySelector('.map__card');
+    if (!mapCard) {
+      renderPopup(rentObectsOne);
+    } else {
+      mapCard.remove();
+      renderPopup(rentObectsOne);
+    }
+    var closePopupButton = document.querySelector('.popup__close');
+    closePopupButton.addEventListener('click', function () {
+      var mapCard = document.querySelector('.map__card');
+      mapCard.remove();
+    });
   });
 };
 
 mapPinMain.addEventListener('mouseup', function () {
   activateMap();
   toggleFieldsDesable();
-  makeNewMapPin(8);
-  press();
+  var mapPins = document.querySelectorAll('.map__pin');
+  if (mapPins.length < 2) {
+    makeNewMapPin(8);
+  }
+  mapPins = document.querySelectorAll('.map__pin');
+  for (var k = 1; k <= mapPins.length + 1; k++) {
+    onMapPinClick(mapPins[k], rentObects[k - 1]);
+  }
 });
-
 
 var fillAddress = function () {
   var mapPin = document.querySelector('.map__pin--main');
@@ -245,12 +258,4 @@ var fillAddress = function () {
 
 fillAddress();
 
-
-
-
-
-
-
-
-
-// renderPopup(rentObects[0]);
+renderPopup(rentObects[0]);
