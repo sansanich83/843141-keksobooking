@@ -31,8 +31,7 @@ var typeMapping = {
 var times = ['12:00', '13:00', '14:00'];
 var NUMBER_OF_TIMES = times.length - 1;
 var houseFeatures = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-var shuffleFeatures = makeShuffleArray(houseFeatures);
-var photos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
+var housePhotos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 var avatarNumbers = [1, 2, 3, 4, 5, 6, 7, 8];
 var shuffleAvatarNumbers = makeShuffleArray(avatarNumbers);
 
@@ -75,6 +74,7 @@ var makeCheckInOut = function () {
 
 var makeFeatures = function () {
   var features = [];
+  var shuffleFeatures = makeShuffleArray(houseFeatures);
   var randomNumberOfFeature = getRandom(1, MAX_FEATURES);
   for (var i = 0; i < randomNumberOfFeature; i++) {
     features[i] = shuffleFeatures[i];
@@ -83,8 +83,12 @@ var makeFeatures = function () {
 };
 
 var makePhotos = function () {
-  var shufflePhotos = makeShuffleArray(photos);
-  return shufflePhotos;
+  var photos = [];
+  var shufflePhotos = makeShuffleArray(housePhotos);
+  for (var i = 0; i < shufflePhotos.length; i++) {
+    photos[i] = shufflePhotos[i];
+  }
+  return photos;
 };
 
 var makeLocationAndAddress = function () {
@@ -219,7 +223,6 @@ var renderPopup = function (object) {
 };
 
 var onMapPinClick = function (mapPinsOne, rentObectsOne) {
-
   mapPinsOne.addEventListener('click', function () {
     var mapCard = document.querySelector('.map__card');
     if (!mapCard) {
@@ -228,6 +231,9 @@ var onMapPinClick = function (mapPinsOne, rentObectsOne) {
       mapCard.remove();
       renderPopup(rentObectsOne);
     }
+    var newAddress = mapPinsOne.getBoundingClientRect();
+    var address = document.querySelector('#address');
+    address.placeholder = newAddress.x + ',' + newAddress.y;
     var closePopupButton = document.querySelector('.popup__close');
     closePopupButton.addEventListener('click', function () {
       var mapCard = document.querySelector('.map__card');
@@ -257,5 +263,3 @@ var fillAddress = function () {
 };
 
 fillAddress();
-
-renderPopup(rentObects[0]);
