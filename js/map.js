@@ -230,7 +230,7 @@ var onEscPress = function (evt) {
     var mapCard = document.querySelector('.map__card');
     if (mapCard) {
       mapCard.remove();
-      this.removeEventListener('keydown', onEscPress);
+      document.removeEventListener('keydown', onEscPress);
     }
   }
 };
