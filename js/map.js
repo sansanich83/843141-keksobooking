@@ -254,10 +254,8 @@ var addMapPinListener = function (mapPinsOne, rentObectsOne) {
       document.removeEventListener('keydown', onEscPress);
     });
     document.addEventListener('keydown', onEscPress);
-    var mapPins = document.querySelectorAll('.map__pin');
-    mapPins.forEach(function (item) {
-      item.classList.remove('map__pin--active');
-    });
+    var mapPinActive = document.querySelectorAll('.map__pin--active');
+    mapPinActive.classList.remove('map__pin--active');
     mapPinsOne.classList.add('map__pin--active');
   });
 };
