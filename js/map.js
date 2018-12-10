@@ -254,8 +254,10 @@ var addMapPinListener = function (mapPinsOne, rentObectsOne) {
       document.removeEventListener('keydown', onEscPress);
     });
     document.addEventListener('keydown', onEscPress);
-    var mapPinActive = document.querySelectorAll('.map__pin--active');
-    mapPinActive.classList.remove('map__pin--active');
+    var mapPinActive = document.querySelector('.map__pin--active');
+    if (mapPinActive) {
+      mapPinActive.classList.remove('map__pin--active');
+    }
     mapPinsOne.classList.add('map__pin--active');
   });
 };
