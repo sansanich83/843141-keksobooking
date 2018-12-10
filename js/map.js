@@ -13,7 +13,9 @@ var Y_OF_PIN = 70;
 var titles = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
 
 var makeShuffleArray = function (array) {
-  var shuffleArray = array.sort(function () { return 0.5 - Math.random() });
+  var shuffleArray = array.sort(function () {
+    return 0.5 - Math.random();
+  });
   return shuffleArray;
 };
 
@@ -141,10 +143,10 @@ var activateMap = function () {
 var toggleFieldsDesable = function (onOff) {
   var selects = document.querySelectorAll('select');
   var fieldSets = document.querySelectorAll('fieldset');
-  for (var i = 0; i < selects.length; i++) {
-    selects[i].disabled = onOff;
+  for (var j = 0; j < selects.length; j++) {
+    selects[j].disabled = onOff;
   }
-  for (var j = 0; j < fieldSets.length; j++) {
+  for (j = 0; j < fieldSets.length; j++) {
     fieldSets[j].disabled = onOff;
   }
 };
@@ -156,7 +158,7 @@ var mapPinsConteiner = document.querySelector('.map__pins');
 var pinsFragment = document.createDocumentFragment();
 
 var makeNewMapPin = function (amountPins) {
-  for (var i = 0; i < amountPins; i++) {
+  for (i = 0; i < amountPins; i++) {
     var pinElement = pinTemplate.content.cloneNode(true);
     var avatarImgTemplate = pinElement.querySelector('img');
     var pinLocation = pinElement.querySelector('button');
@@ -223,6 +225,16 @@ var renderPopup = function (object) {
   mapFaded.insertBefore(cardElement, mapFiltersConteiner);
 };
 
+var onEscPress = function (evt) {
+  if (evt.keyCode === 27) {
+    var mapCard = document.querySelector('.map__card');
+    if (mapCard) {
+      mapCard.remove();
+      this.removeEventListener('keydown', onEscPress);
+    }
+  }
+};
+
 var onMapPinClick = function (mapPinsOne, rentObectsOne) {
   mapPinsOne.addEventListener('click', function () {
     var mapCard = document.querySelector('.map__card');
@@ -237,15 +249,11 @@ var onMapPinClick = function (mapPinsOne, rentObectsOne) {
     address.placeholder = newAddress.x + ',' + newAddress.y;
     var closePopupButton = document.querySelector('.popup__close');
     closePopupButton.addEventListener('click', function () {
-      var mapCard = document.querySelector('.map__card');
+      mapCard = document.querySelector('.map__card');
       mapCard.remove();
+      document.removeEventListener('keydown', onEscPress);
     });
-  });
-  document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === 27) {
-      var mapCard = document.querySelector('.map__card');
-      mapCard.remove();
-    }
+    document.addEventListener('keydown', onEscPress);
   });
 };
 
