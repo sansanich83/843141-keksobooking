@@ -265,7 +265,7 @@ mapPinMain.addEventListener('mouseup', function () {
     makeNewMapPin(8);
   }
   mapPins = document.querySelectorAll('.map__pin');
-  for (var k = 1; k <= mapPins.length + 1; k++) {
+  for (var k = 1; k < mapPins.length; k++) {
     onMapPinClick(mapPins[k], rentObects[k - 1]);
   }
 });
