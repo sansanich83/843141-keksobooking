@@ -283,3 +283,9 @@ var fillAddress = function () {
 };
 
 fillAddress();
+
+var adFormInputs = adForm.querySelectorAll('input:not(.feature__checkbox)');
+
+for (i = 0; i < adFormInputs.length; i++) {
+  adFormInputs[i].required = true;
+}
