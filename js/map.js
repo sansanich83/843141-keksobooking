@@ -284,17 +284,67 @@ var fillAddress = function () {
 
 fillAddress();
 
-var adFormInputs = adForm.querySelectorAll('input:not(.feature__checkbox)');
-
-for (i = 0; i < adFormInputs.length; i++) {
-  adFormInputs[i].required = true;
-}
+var setRequred = function (requiredInput) {
+  requiredInput.required = true;
+};
 
 var titleInput = document.querySelector('#title');
 if (titleInput.type !== 'text') {
   titleInput.type = 'text';
 }
+titleInput.setAttribute('minlength', '3');
+titleInput.setAttribute('maxlength', '100');
+
 var priceInput = document.querySelector('#price');
 if (priceInput.type !== 'number') {
   priceInput.type = 'number';
 }
+
+priceInput.setAttribute('max', '1000000');
+
+var typeHouse = document.querySelector('#type');
+
+typeHouse.addEventListener('input', function (evt) {
+  var targetValue = evt.target.value;
+  if (targetValue === 'bungalo') {
+    priceInput.setAttribute('min', '0');
+  } else if (targetValue === 'house') {
+    priceInput.setAttribute('min', '5000');
+  } else if (targetValue === 'flat') {
+    priceInput.setAttribute('min', '1000');
+  } else if (targetValue === 'palace') {
+    priceInput.setAttribute('min', '10000');
+  }
+});
+
+setRequred(titleInput);
+setRequred(priceInput);
+
+var timeIn = document.querySelector('#timein');
+var timeOut = document.querySelector('#timeout');
+
+timeIn.addEventListener('input', function (evt) {
+  var targetValue = evt.target.value;
+  timeOut.value = targetValue;
+});
+
+timeOut.addEventListener('input', function (evt) {
+  var targetValue = evt.target.value;
+  timeIn.value = targetValue;
+});
+
+var roomNumber = document.querySelector('#room_number');
+var capacity = document.querySelector('#capacity');
+
+roomNumber.addEventListener('input', function (evt) {
+  var target = evt.target;
+  console.log(capacity.value);
+  console.log(target.value);
+  if (target.value === '1' && capacity.value !== '1') {
+    target.setCustomValidity('Выберите для 1 гостя');
+  } else {
+    target.setCustomValidity('');
+  }
+});
+
+setRequred(roomNumber);
