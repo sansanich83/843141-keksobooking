@@ -325,24 +325,47 @@ timeOut.addEventListener('input', function (evt) {
 var roomNumber = document.querySelector('#room_number');
 var capacity = document.querySelector('#capacity');
 
+var setDisabled = function (inpt) {
+  inpt.disabled = true;
+};
+var setEnabled = function (inpt) {
+  inpt.disabled = false;
+};
+
+var capacityOptions = capacity.querySelectorAll('option');
+setDisabled(capacityOptions[0]);
+setDisabled(capacityOptions[1]);
+setDisabled(capacityOptions[3]);
+// setEnabled(capacityOptions[3]);
+
+roomNumber.invalid = true;
+
 roomNumber.addEventListener('input', function (evt) {
   var target = evt.target;
-  if (target.value === '100') {
-    capacity.value = '0';
+  if (target.value === '1') {
+    setDisabled(capacityOptions[1]);
+    target.setCustomValidity('Выберите для меньше гостей');
+  } else if (target.value === '2') {
+    setEnabled(capacityOptions[1]);
+    setEnabled(capacityOptions[2]);
+  } else if (target.value === '3') {
+    target.setCustomValidity('Выберите для 3 гостей');
+  } else if (target.value === '100' && capacity.value !== '0') {
+    target.setCustomValidity('Выберите не для гостей');
   } else {
-    capacity.value = target.value;
+    target.setCustomValidity('');
   }
 });
 
 capacity.addEventListener('input', function (evt) {
   var target = evt.target;
-  if (roomNumber.value === '1' && capacity.value !== '1') {
-    target.setCustomValidity('Выберите для 1 гостя');
-  } else if (roomNumber.value === '2' && capacity.value !== '2') {
+  if (target.value === '1') {
+    roomNumber.setCustomValidity('');
+  } else if (target.value === '2' && roomNumber.value !== '2') {
     target.setCustomValidity('Выберите для 2 гостей');
-  } else if (roomNumber.value === '3' && capacity.value !== '3') {
+  } else if (target.value === '3' && roomNumber.value !== '3') {
     target.setCustomValidity('Выберите для 3 гостей');
-  } else if (roomNumber.value === '0' && capacity.value !== '100') {
+  } else if (target.value === '0' && roomNumber.value !== '100') {
     target.setCustomValidity('Выберите не для гостей');
   } else {
     target.setCustomValidity('');

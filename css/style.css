@@ -1249,6 +1249,6 @@ fieldset {
   opacity: 0.6;
 }
 
-#title:invalid {
+#title:invalid:focus, #price:invalid:focus, #room_number:invalid, #capacity:invalid {
   box-shadow: 0 0 5px 5px red;
 }
