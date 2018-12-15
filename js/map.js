@@ -139,6 +139,10 @@ var activateMap = function () {
   adForm.classList.remove('ad-form--disabled');
   mapFaded.classList.remove('map--faded');
 };
+var deactivateMap = function () {
+  adForm.classList.add('ad-form--disabled');
+  mapFaded.classList.add('map--faded');
+};
 
 var toggleFieldsDesable = function (onOff) {
   var selects = document.querySelectorAll('select');
@@ -376,4 +380,22 @@ capacity.addEventListener('input', function (evt) {
     target.setCustomValidity('');
     roomNumber.setCustomValidity('');
   }
+});
+
+var adFormReset = document.querySelector('.ad-form__reset');
+adFormReset.addEventListener('click', function () {
+  toggleFieldsDesable(true);
+  var mapCard = document.querySelector('.map__card');
+  if (mapCard) {
+    mapCard.remove();
+  }
+  deactivateMap();
+  var oldMapPins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+  for (i = 0; i < oldMapPins.length; i++) {
+    oldMapPins[i].remove();
+  }
+  adForm.reset();
+  priceInput.placeholder = '0';
+  priceInput.setAttribute('min', '0');
+  fillAddress();
 });
