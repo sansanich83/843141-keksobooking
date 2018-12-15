@@ -139,6 +139,10 @@ var activateMap = function () {
   adForm.classList.remove('ad-form--disabled');
   mapFaded.classList.remove('map--faded');
 };
+var deactivateMap = function () {
+  adForm.classList.add('ad-form--disabled');
+  mapFaded.classList.add('map--faded');
+};
 
 var toggleFieldsDesable = function (onOff) {
   var selects = document.querySelectorAll('select');
@@ -283,3 +287,115 @@ var fillAddress = function () {
 };
 
 fillAddress();
+
+var priceInput = document.querySelector('#price');
+var typeHouse = document.querySelector('#type');
+
+typeHouse.addEventListener('input', function (evt) {
+  var target = evt.target;
+  if (target.value === 'bungalo') {
+    priceInput.placeholder = '0';
+    priceInput.setAttribute('min', '0');
+  } else if (target.value === 'house') {
+    priceInput.placeholder = '5000';
+    priceInput.setAttribute('min', '5000');
+  } else if (target.value === 'flat') {
+    priceInput.placeholder = '1000';
+    priceInput.setAttribute('min', '1000');
+  } else if (target.value === 'palace') {
+    priceInput.placeholder = '10000';
+    priceInput.setAttribute('min', '10000');
+  }
+});
+
+var timeIn = document.querySelector('#timein');
+var timeOut = document.querySelector('#timeout');
+
+timeIn.addEventListener('input', function (evt) {
+  var targetValue = evt.target.value;
+  timeOut.value = targetValue;
+});
+
+timeOut.addEventListener('input', function (evt) {
+  var targetValue = evt.target.value;
+  timeIn.value = targetValue;
+});
+
+var roomNumber = document.querySelector('#room_number');
+var capacity = document.querySelector('#capacity');
+
+var validationMapping = function () {
+  if (roomNumber.value === '1' && capacity.value === '1') {
+    return true;
+  } else if (roomNumber.value === '1' && capacity.value === '2') {
+    return false;
+  } else if (roomNumber.value === '1' && capacity.value === '3') {
+    return false;
+  } else if (roomNumber.value === '1' && capacity.value === '0') {
+    return false;
+  } else if (roomNumber.value === '2' && capacity.value === '1') {
+    return true;
+  } else if (roomNumber.value === '2' && capacity.value === '2') {
+    return true;
+  } else if (roomNumber.value === '2' && capacity.value === '3') {
+    return false;
+  } else if (roomNumber.value === '2' && capacity.value === '0') {
+    return false;
+  } else if (roomNumber.value === '3' && capacity.value === '1') {
+    return true;
+  } else if (roomNumber.value === '3' && capacity.value === '2') {
+    return true;
+  } else if (roomNumber.value === '3' && capacity.value === '3') {
+    return true;
+  } else if (roomNumber.value === '3' && capacity.value === '0') {
+    return false;
+  } else if (roomNumber.value === '100' && capacity.value === '1') {
+    return false;
+  } else if (roomNumber.value === '100' && capacity.value === '2') {
+    return false;
+  } else if (roomNumber.value === '100' && capacity.value === '3') {
+    return false;
+  } else {
+    return true;
+  }
+};
+
+roomNumber.addEventListener('input', function (evt) {
+  var target = evt.target;
+  if (!validationMapping()) {
+    target.setCustomValidity('в одну комнату помещается максимум 1 гость');
+    capacity.setCustomValidity('в одну комнату помещается максимум 1 гость');
+  } else {
+    target.setCustomValidity('');
+    capacity.setCustomValidity('');
+  }
+});
+
+capacity.addEventListener('input', function (evt) {
+  var target = evt.target;
+  if (!validationMapping()) {
+    target.setCustomValidity('в одну комнату помещается максимум 1 гость');
+    roomNumber.setCustomValidity('в одну комнату помещается максимум 1 гость');
+  } else {
+    target.setCustomValidity('');
+    roomNumber.setCustomValidity('');
+  }
+});
+
+var adFormReset = document.querySelector('.ad-form__reset');
+adFormReset.addEventListener('click', function () {
+  toggleFieldsDesable(true);
+  var mapCard = document.querySelector('.map__card');
+  if (mapCard) {
+    mapCard.remove();
+  }
+  deactivateMap();
+  var oldMapPins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+  for (i = 0; i < oldMapPins.length; i++) {
+    oldMapPins[i].remove();
+  }
+  adForm.reset();
+  priceInput.placeholder = '0';
+  priceInput.setAttribute('min', '0');
+  fillAddress();
+});
