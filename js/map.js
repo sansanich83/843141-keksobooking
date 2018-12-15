@@ -290,6 +290,7 @@ var typeHouse = document.querySelector('#type');
 typeHouse.addEventListener('input', function (evt) {
   var target = evt.target;
   if (target.value === 'bungalo') {
+    priceInput.placeholder = '0';
     priceInput.setAttribute('min', '0');
   } else if (target.value === 'house') {
     priceInput.placeholder = '5000';
