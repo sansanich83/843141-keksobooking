@@ -266,6 +266,34 @@ var addMapPinListener = function (mapPinsOne, rentObectsOne) {
   });
 };
 
+mapPinMain.addEventListener('mousedown', function (evt) {
+  console.log('событие');
+  // evt.preventDefault();
+  // var startPosition = {
+  //   x: evt.clientX,
+  //   y: evt.clientY
+  // };
+});
+
+//   var onMouseMove = function (moveEvt) {
+//     moveEvt.preventDefault();
+//     var shift = {
+//       x: startPosition.x - moveEvt.clientX,
+//       y: startPosition.y - moveEvt.clientY
+//     };
+
+//     startPosition = {
+//       x: moveEvt.clientX,
+//       y: moveEvt.clientY
+//     };
+
+//     mapPinMain.style.top = (mapPinMain.offsetTop = shift.y) + 'px';
+//     mapPinMain.style.left = (mapPinMain.offsetTop = shift.x) + 'px';
+//   };
+//   document.addEventListener('mousemove', onMouseMove);
+
+// });
+
 mapPinMain.addEventListener('mouseup', function () {
   activateMap();
   toggleFieldsDesable(false);
