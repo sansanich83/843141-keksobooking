@@ -267,32 +267,55 @@ var addMapPinListener = function (mapPinsOne, rentObectsOne) {
 };
 
 mapPinMain.addEventListener('mousedown', function (evt) {
-  console.log('событие');
-  // evt.preventDefault();
-  // var startPosition = {
-  //   x: evt.clientX,
-  //   y: evt.clientY
-  // };
+  evt.preventDefault();
+  var startPosition = {
+    x: evt.clientX,
+    y: evt.clientY
+  };
+
+  var onMouseMove = function (moveEvt) {
+    moveEvt.preventDefault();
+    var rightLimit = mapFaded.offsetLeft + mapFaded.offsetWidth;
+    var leftLimit = mapFaded.offsetLeft;
+    console.log(moveEvt);
+    console.log(rightLimit);
+    var shift = {
+      x: startPosition.x - moveEvt.clientX,
+      y: startPosition.y - moveEvt.clientY
+    };
+
+    startPosition = {
+      x: moveEvt.clientX,
+      y: moveEvt.clientY
+    };
+
+    if (moveEvt.clientX > rightLimit) {
+      mapPinMain.style.left = rightLimit - 100 + 'px';
+    } else if (moveEvt.clientX < leftLimit) {
+      mapPinMain.style.left = leftLimit + 55 + 'px';
+    } else {
+      mapPinMain.style.left = (mapPinMain.offsetLeft - shift.x) + 'px';
+    }
+
+    if (moveEvt.clientY > 600) {
+      mapPinMain.style.top = 600 + 'px';
+    } else if (moveEvt.clientY < 130) {
+      mapPinMain.style.top = 130 + 'px';
+    } else {
+      mapPinMain.style.top = (mapPinMain.offsetTop - shift.y) + 'px';
+    }
+  };
+
+  var onMouseUp = function (upEvt) {
+    upEvt.preventDefault();
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mousedown', onMouseUp);
+  };
+
+  document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseup', onMouseUp);
+
 });
-
-//   var onMouseMove = function (moveEvt) {
-//     moveEvt.preventDefault();
-//     var shift = {
-//       x: startPosition.x - moveEvt.clientX,
-//       y: startPosition.y - moveEvt.clientY
-//     };
-
-//     startPosition = {
-//       x: moveEvt.clientX,
-//       y: moveEvt.clientY
-//     };
-
-//     mapPinMain.style.top = (mapPinMain.offsetTop = shift.y) + 'px';
-//     mapPinMain.style.left = (mapPinMain.offsetTop = shift.x) + 'px';
-//   };
-//   document.addEventListener('mousemove', onMouseMove);
-
-// });
 
 mapPinMain.addEventListener('mouseup', function () {
   activateMap();
