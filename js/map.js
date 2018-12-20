@@ -250,7 +250,7 @@ var addMapPinListener = function (mapPinsOne, rentObectsOne) {
     }
     var newAddress = mapPinsOne.getBoundingClientRect();
     var address = document.querySelector('#address');
-    address.value = newAddress.x + ',' + newAddress.y;
+    address.value = Math.round(newAddress.x) + ',' + Math.round(newAddress.y);
     var closePopupButton = document.querySelector('.popup__close');
     closePopupButton.addEventListener('click', function () {
       mapCard = document.querySelector('.map__card');
@@ -266,27 +266,67 @@ var addMapPinListener = function (mapPinsOne, rentObectsOne) {
   });
 };
 
-mapPinMain.addEventListener('mouseup', function () {
-  activateMap();
-  toggleFieldsDesable(false);
-  var mapPins = document.querySelectorAll('.map__pin');
-  if (mapPins.length < 2) {
-    makeNewMapPin(8);
-  }
-  mapPins = document.querySelectorAll('.map__pin');
-  for (var k = 1; k < mapPins.length; k++) {
-    addMapPinListener(mapPins[k], rentObects[k - 1]);
-  }
+mapPinMain.addEventListener('mousedown', function (evt) {
+  evt.preventDefault();
+  var startPosition = {
+    x: evt.clientX,
+    y: evt.clientY
+  };
+
+  var onMouseMove = function (moveEvt) {
+    moveEvt.preventDefault();
+    var rightLimit = mapFaded.offsetWidth - 35;
+    var leftLimit = -25;
+
+    var shift = {
+      x: startPosition.x - moveEvt.clientX,
+      y: startPosition.y - moveEvt.clientY
+    };
+
+    startPosition = {
+      x: moveEvt.clientX,
+      y: moveEvt.clientY
+    };
+
+    var newPosition = {
+      left: mapPinMain.offsetLeft - shift.x,
+      top: mapPinMain.offsetTop - shift.y
+    };
+
+    if ((newPosition.left < rightLimit) && (newPosition.left > leftLimit)) {
+      mapPinMain.style.left = (mapPinMain.offsetLeft - shift.x) + 'px';
+    }
+    if ((newPosition.top < 620) && (newPosition.top > 90)) {
+      mapPinMain.style.top = (mapPinMain.offsetTop - shift.y) + 'px';
+    }
+    var fillAddress = function () {
+      var mapPin = document.querySelector('.map__pin--main');
+      var positionMapPin = mapPin.getBoundingClientRect();
+      var address = document.querySelector('#address');
+      address.value = Math.round(positionMapPin.x) + ',' + Math.round(positionMapPin.y);
+    };
+    fillAddress();
+  };
+
+  var onMouseUp = function () {
+    activateMap();
+    toggleFieldsDesable(false);
+    var mapPins = document.querySelectorAll('.map__pin');
+    if (mapPins.length < 2) {
+      makeNewMapPin(8);
+    }
+    mapPins = document.querySelectorAll('.map__pin');
+    for (var k = 1; k < mapPins.length; k++) {
+      addMapPinListener(mapPins[k], rentObects[k - 1]);
+    }
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+  };
+
+  document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseup', onMouseUp);
+
 });
-
-var fillAddress = function () {
-  var mapPin = document.querySelector('.map__pin--main');
-  var positionMapPin = mapPin.getBoundingClientRect();
-  var address = document.querySelector('#address');
-  address.value = positionMapPin.x + ',' + positionMapPin.y;
-};
-
-fillAddress();
 
 var priceInput = document.querySelector('#price');
 var typeHouse = document.querySelector('#type');
@@ -397,5 +437,6 @@ adFormReset.addEventListener('click', function () {
   adForm.reset();
   priceInput.placeholder = '0';
   priceInput.setAttribute('min', '0');
-  fillAddress();
+  mapPinMain.style.left = 570 + 'px';
+  mapPinMain.style.top = 375 + 'px';
 });
