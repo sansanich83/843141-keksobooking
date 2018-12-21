@@ -24,7 +24,7 @@
         window.ads.renderPopup(rentObectsOne);
       }
       var xCoordinate = mapPinsOne.offsetLeft + 31;
-      var yCoordinate = mapPinsOne.offsetTop - 101;
+      var yCoordinate = mapPinsOne.offsetTop + 34;
       address.value = Math.round(xCoordinate) + ',' + Math.round(yCoordinate);
       var closePopupButton = document.querySelector('.popup__close');
       closePopupButton.addEventListener('click', function () {
@@ -77,7 +77,7 @@
       var fillAddress = function () {
         var mapPin = document.querySelector('.map__pin--main');
         var xCoordinate = mapPin.offsetLeft + 31;
-        var yCoordinate = mapPin.offsetTop - 91;
+        var yCoordinate = mapPin.offsetTop + 39;
         address.value = Math.round(xCoordinate) + ',' + Math.round(yCoordinate);
       };
       fillAddress();
