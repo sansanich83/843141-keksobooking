@@ -84,16 +84,9 @@
     };
 
     var onMouseUp = function () {
+      window.backend.getData('https://js.dump.academy/keksobooking/data', window.backend.onLoad, window.backend.onError);
       window.activation.activateMap();
       window.activation.toggleFieldsDesable(false);
-      var mapPins = document.querySelectorAll('.map__pin');
-      if (mapPins.length < 2) {
-        window.ads.makeNewMapPin(window.rentObects.length);
-      }
-      mapPins = document.querySelectorAll('.map__pin');
-      for (var k = 1; k < mapPins.length; k++) {
-        addMapPinListener(mapPins[k], window.rentObects[k - 1]);
-      }
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
     };
@@ -101,5 +94,8 @@
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
 
+    window.mapTactics = {
+      addMapPinListener: addMapPinListener
+    };
   });
 })();

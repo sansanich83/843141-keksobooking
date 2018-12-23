@@ -1,7 +1,6 @@
 'use strict';
 (function () {
-  var adFormReset = document.querySelector('.ad-form__reset');
-  adFormReset.addEventListener('click', function () {
+  var reset = function () {
     window.activation.toggleFieldsDesable(true);
     var mapCard = document.querySelector('.map__card');
     if (mapCard) {
@@ -17,5 +16,9 @@
     window.common.priceInput.setAttribute('min', '0');
     window.common.mapPinMain.style.left = 570 + 'px';
     window.common.mapPinMain.style.top = 375 + 'px';
-  });
+  };
+
+  var adFormReset = document.querySelector('.ad-form__reset');
+  adFormReset.addEventListener('click', reset);
+  window.reset = reset;
 })();
