@@ -44,14 +44,14 @@
     }
   };
 
-  var sendForm = function (onSend, data) {
+  var sendForm = function (data, onSend) {
     var xhr = new XMLHttpRequest();
     var URL = 'https://js.dump.academy/keksobooking';
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
       if (xhr.status === 200) {
-        onLoad(xhr.response);
+        onSend();
       } else {
         onError('Cтатус ответа: ' + xhr.status + ' ' + xhr.statusText);
       }
@@ -73,11 +73,12 @@
 
   window.common.adForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
-    console.log(new FormData(window.common.adForm));
-    window.backend.sendForm(new FormData(window.common.adForm), function (response) {
-      window.reset();
-    });
+    window.backend.sendForm(new FormData(window.common.adForm), onSend);
   });
+
+  var onSend = function () {
+    window.reset();
+  };
 
   window.backend = {
     onError: onError,
