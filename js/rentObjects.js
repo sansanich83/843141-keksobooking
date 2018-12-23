@@ -121,5 +121,5 @@
     };
     rentObects[i] = rentObject;
   }
-  window.rentObects = rentObects;
+  // window.rentObects = rentObects;
 })();

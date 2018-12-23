@@ -88,7 +88,7 @@
       window.activation.toggleFieldsDesable(false);
       var mapPins = document.querySelectorAll('.map__pin');
       if (mapPins.length < 2) {
-        window.ads.makeNewMapPin(8);
+        window.ads.makeNewMapPin(window.rentObects.length);
       }
       mapPins = document.querySelectorAll('.map__pin');
       for (var k = 1; k < mapPins.length; k++) {
