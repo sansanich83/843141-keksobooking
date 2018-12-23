@@ -30,6 +30,14 @@
 
   var onError = function (message) {
     console.error(message);
+    var errorTemplate = document.querySelector('#error');
+    var errorElement = errorTemplate.content.cloneNode(true);
+    window.common.main.appendChild(errorElement);
+    var errorButton = document.querySelector('.error__button');
+    errorButton.addEventListener('click', function () {
+      var error = document.querySelector('.error');
+      error.remove();
+    });
   };
 
   var onLoad = function (data) {
