@@ -28,16 +28,29 @@
     xhr.send();
   };
 
+  var onEscCloseError = function (evt) {
+    if (evt.keyCode === 27) {
+      var error = document.querySelector('.error');
+      if (error) {
+        error.remove();
+        document.removeEventListener('keydown', onEscCloseError);
+      }
+    }
+  };
+
   var onError = function (message) {
     console.error(message);
     var errorTemplate = document.querySelector('#error');
     var errorElement = errorTemplate.content.cloneNode(true);
     window.common.main.appendChild(errorElement);
+    var error = document.querySelector('.error');
     var errorButton = document.querySelector('.error__button');
-    errorButton.addEventListener('click', function () {
-      var error = document.querySelector('.error');
+    var onClickCloseError = function () {
       error.remove();
-    });
+    };
+    errorButton.addEventListener('click', onClickCloseError);
+    document.addEventListener('keydown', onEscCloseError);
+    error.addEventListener('click', onClickCloseError);
   };
 
   var onLoad = function (data) {
@@ -84,8 +97,28 @@
     window.backend.sendForm(new FormData(window.common.adForm), onSend);
   });
 
+  var onEscCloseSuccess = function (evt) {
+    if (evt.keyCode === 27) {
+      var success = document.querySelector('.success');
+      if (success) {
+        success.remove();
+        document.removeEventListener('keydown', onEscCloseSuccess);
+      }
+    }
+  };
+
   var onSend = function () {
     window.reset();
+    var successTemplate = document.querySelector('#success');
+    console.log(successTemplate.content);
+    var successElement = successTemplate.content.cloneNode(true);
+    window.common.main.appendChild(successElement);
+    var success = document.querySelector('.success');
+    var onClickCloseSuccess = function () {
+      success.remove();
+    };
+    document.addEventListener('keydown', onEscCloseSuccess);
+    success.addEventListener('click', onClickCloseSuccess);
   };
 
   window.backend = {

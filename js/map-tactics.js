@@ -14,6 +14,14 @@
     }
   };
 
+  var fillAddress = function () {
+    var mapPin = document.querySelector('.map__pin--main');
+    var xCoordinate = mapPin.offsetLeft + 31;
+    var yCoordinate = mapPin.offsetTop + 39;
+    address.value = Math.round(xCoordinate) + ',' + Math.round(yCoordinate);
+  };
+  fillAddress();
+
   var addMapPinListener = function (mapPinsOne, rentObectsOne) {
     mapPinsOne.addEventListener('click', function () {
       var mapCard = document.querySelector('.map__card');
@@ -74,12 +82,6 @@
       if ((newPosition.top < BOTTOM_LIMIT) && (newPosition.top > TOP_LIMIT)) {
         window.common.mapPinMain.style.top = (window.common.mapPinMain.offsetTop - shift.y) + 'px';
       }
-      var fillAddress = function () {
-        var mapPin = document.querySelector('.map__pin--main');
-        var xCoordinate = mapPin.offsetLeft + 31;
-        var yCoordinate = mapPin.offsetTop + 39;
-        address.value = Math.round(xCoordinate) + ',' + Math.round(yCoordinate);
-      };
       fillAddress();
     };
 
