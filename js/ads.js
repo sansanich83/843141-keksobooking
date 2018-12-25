@@ -44,6 +44,8 @@
     var popupDescription = cardElement.querySelector('.popup__description');
     var popupPhotos = cardElement.querySelector('.popup__photos');
     var popupAvatar = cardElement.querySelector('.popup__avatar');
+    var objectFeatures = object.offer.features;
+    var objectPhotos = object.offer.photos;
     popupTitle.textContent = object.offer.title;
     popupAddress.textContent = object.offer.address;
     popupPrice.textContent = object.offer.price + ' ₽/ночь';
@@ -52,15 +54,24 @@
     popupTime.textContent = 'Заезд после ' + object.offer.checkin + ' , выезд до ' + object.offer.checkout;
 
     var makeFeatureLi = function () {
-      var featuresList = object.offer.features;
-      for (var i = 0; i < featuresList.length; i++) {
+      for (var i = 0; i < objectFeatures.length; i++) {
         var featureLi = document.createElement('li');
         var featureClass = 'popup__feature--' + object.offer.features[i];
         featureLi.classList.add(featureClass, 'popup__feature');
         popupFeatures.appendChild(featureLi);
       }
     };
-    makeFeatureLi();
+    if (object.offer) {
+      makeFeatureLi();
+    }
+
+    if (objectFeatures.length < 1) {
+      popupFeatures.classList.add('visually-hidden');
+    }
+    if (objectPhotos.length < 1) {
+      popupPhotos.classList.add('visually-hidden');
+    }
+
 
     popupDescription.textContent = object.offer.description;
 
