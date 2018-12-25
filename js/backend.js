@@ -47,6 +47,7 @@
     var errorButton = document.querySelector('.error__button');
     var onClickCloseError = function () {
       error.remove();
+      document.removeEventListener('keydown', onEscCloseError);
     };
     errorButton.addEventListener('click', onClickCloseError);
     document.addEventListener('keydown', onEscCloseError);
@@ -115,6 +116,7 @@
     var success = document.querySelector('.success');
     var onClickCloseSuccess = function () {
       success.remove();
+      document.removeEventListener('keydown', onEscCloseSuccess);
     };
     document.addEventListener('keydown', onEscCloseSuccess);
     success.addEventListener('click', onClickCloseSuccess);
