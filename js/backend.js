@@ -110,7 +110,6 @@
   var onSend = function () {
     window.reset();
     var successTemplate = document.querySelector('#success');
-    console.log(successTemplate.content);
     var successElement = successTemplate.content.cloneNode(true);
     window.common.main.appendChild(successElement);
     var success = document.querySelector('.success');
