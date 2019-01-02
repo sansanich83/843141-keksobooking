@@ -58,7 +58,7 @@
     window.rentObjects = data;
     var mapPins = document.querySelectorAll('.map__pin');
     if (mapPins.length < 2) {
-      window.ads.makeNewMapPin(window.rentObjects.length, window.rentObjects);
+      window.ads.makeNewMapPin(5, window.rentObjects);
     }
     mapPins = document.querySelectorAll('.map__pin');
     for (var k = 1; k < mapPins.length; k++) {
