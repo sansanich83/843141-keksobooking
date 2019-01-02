@@ -55,14 +55,14 @@
   };
 
   var onLoad = function (data) {
-    window.rentObects = data;
+    window.rentObjects = data;
     var mapPins = document.querySelectorAll('.map__pin');
     if (mapPins.length < 2) {
-      window.ads.makeNewMapPin(window.rentObects.length);
+      window.ads.makeNewMapPin(window.rentObjects.length, window.rentObjects);
     }
     mapPins = document.querySelectorAll('.map__pin');
     for (var k = 1; k < mapPins.length; k++) {
-      window.mapTactics.addMapPinListener(mapPins[k], window.rentObects[k - 1]);
+      window.mapTactics.addMapPinListener(mapPins[k], window.rentObjects[k - 1]);
     }
   };
 

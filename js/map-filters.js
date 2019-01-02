@@ -93,14 +93,28 @@
     }
   };
 
-  mapFilters.addEventListener('change', function () {
-    window.filtered = window.rentObects.filter(function (object) {
+  var onFilterChange = function () {
+    window.deletePin();
+    window.filteredObjects = window.rentObjects.filter(function (object) {
       return checkPrice(object) && checkType(object) && checkRoom(object) &&
-      checkGuest(object) && checkWifi(object) && checkDishwasher(object) &&
-      checkParking(object) && checkWasher(object) && checkElevator(object) && checkConditioner(object);
+        checkGuest(object) && checkWifi(object) && checkDishwasher(object) &&
+        checkParking(object) && checkWasher(object) && checkElevator(object) && checkConditioner(object);
     });
-    console.log(window.filtered);
+    console.log(window.filteredObjects);
+    window.ads.makeNewMapPin(window.filteredObjects.length, window.filteredObjects);
+    var mapPins = document.querySelectorAll('.map__pin');
+    for (var k = 1; k < mapPins.length; k++) {
+      window.mapTactics.addMapPinListener(mapPins[k], window.filteredObjects[k - 1]);
+    }
+  };
 
+  var lastTimeout;
+
+  mapFilters.addEventListener('change', function () {
+    if (lastTimeout) {
+      clearTimeout(lastTimeout);
+    }
+    lastTimeout = setTimeout(onFilterChange, 500);
   });
 
 })();

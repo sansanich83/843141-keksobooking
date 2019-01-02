@@ -14,15 +14,15 @@
   var mapPinsConteiner = document.querySelector('.map__pins');
   var pinsFragment = document.createDocumentFragment();
 
-  var makeNewMapPin = function (amountPins) {
+  var makeNewMapPin = function (amountPins, rentObjects) {
     for (var i = 0; i < amountPins; i++) {
       var pinElement = pinTemplate.content.cloneNode(true);
       var avatarImgTemplate = pinElement.querySelector('img');
       var pinLocation = pinElement.querySelector('button');
 
-      pinLocation.style.cssText = 'left:' + (window.rentObects[i].location.x - X_HALF_OF_PIN) + 'px;' + 'top:' + (window.rentObects[i].location.y - Y_OF_PIN) + 'px;';
-      avatarImgTemplate.src = window.rentObects[i].author.avatar;
-      avatarImgTemplate.alt = window.rentObects[i].offer.title;
+      pinLocation.style.cssText = 'left:' + (rentObjects[i].location.x - X_HALF_OF_PIN) + 'px;' + 'top:' + (rentObjects[i].location.y - Y_OF_PIN) + 'px;';
+      avatarImgTemplate.src = rentObjects[i].author.avatar;
+      avatarImgTemplate.alt = rentObjects[i].offer.title;
 
       pinsFragment.appendChild(pinElement);
     }
