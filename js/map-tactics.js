@@ -2,7 +2,7 @@
 (function () {
 
   var BOTTOM_LIMIT = 625;
-  var TOP_LIMIT = 90;
+  var TOP_LIMIT = 65;
   var address = document.querySelector('#address');
   var onEscPress = function (evt) {
     if (evt.keyCode === 27) {
@@ -16,8 +16,8 @@
 
   var fillAddress = function () {
     var mapPin = document.querySelector('.map__pin--main');
-    var xCoordinate = mapPin.offsetLeft + 31;
-    var yCoordinate = mapPin.offsetTop + 39;
+    var xCoordinate = mapPin.offsetLeft + 33;
+    var yCoordinate = mapPin.offsetTop + 65;
     address.value = Math.round(xCoordinate) + ',' + Math.round(yCoordinate);
   };
   fillAddress();
@@ -31,9 +31,6 @@
         mapCard.remove();
         window.ads.renderPopup(rentObectsOne);
       }
-      var xCoordinate = mapPinsOne.offsetLeft + 31;
-      var yCoordinate = mapPinsOne.offsetTop + 34;
-      address.value = Math.round(xCoordinate) + ',' + Math.round(yCoordinate);
       var closePopupButton = document.querySelector('.popup__close');
       closePopupButton.addEventListener('click', function () {
         mapCard = document.querySelector('.map__card');

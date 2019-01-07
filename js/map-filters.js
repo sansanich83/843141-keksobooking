@@ -13,7 +13,7 @@
   var filterConditioner = document.querySelector('#filter-conditioner');
 
   var checkPrice = function (object) {
-    if ((filterPrice.value === 'middle') && (object.offer.price > 10000) && (object.offer.price < 50000)) {
+    if ((filterPrice.value === 'middle') && (object.offer.price >= 10000) && (object.offer.price <= 50000)) {
       return true;
     } else if ((filterPrice.value === 'low') && (object.offer.price < 10000)) {
       return true;
