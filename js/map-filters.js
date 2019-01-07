@@ -30,11 +30,11 @@
   };
 
   var checkRoom = function (object) {
-    return ((filterRoom.value == object.offer.rooms) || (filterRoom.value === 'any'));
+    return ((parseInt(filterRoom.value, 10) === object.offer.rooms) || (filterRoom.value === 'any'));
   };
 
   var checkGuest = function (object) {
-    return ((filterGuest.value == object.offer.guests) || (filterGuest.value === 'any'));
+    return ((parseInt(filterGuest.value, 10) === object.offer.guests) || (filterGuest.value === 'any'));
   };
 
   var findFeature = function (object, feature) {
@@ -43,6 +43,7 @@
         return true;
       }
     }
+    return false;
   };
 
   var checkWifi = function (object) {

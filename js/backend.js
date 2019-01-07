@@ -1,6 +1,7 @@
 'use strict';
 (function () {
 
+  var URL = 'https://js.dump.academy/keksobooking';
   var getData = function (url, onLoad, onError) {
     var xhr = new XMLHttpRequest();
 
@@ -38,8 +39,7 @@
     }
   };
 
-  var onError = function (message) {
-    console.error(message);
+  var onError = function () {
     var errorTemplate = document.querySelector('#error');
     var errorElement = errorTemplate.content.cloneNode(true);
     window.common.main.appendChild(errorElement);
@@ -68,7 +68,6 @@
 
   var sendForm = function (data, onSend) {
     var xhr = new XMLHttpRequest();
-    var URL = 'https://js.dump.academy/keksobooking';
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
