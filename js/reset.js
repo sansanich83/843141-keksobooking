@@ -19,6 +19,10 @@
     window.common.priceInput.setAttribute('min', '0');
     window.common.mapPinMain.style.left = 570 + 'px';
     window.common.mapPinMain.style.top = 375 + 'px';
+    window.mapTactics.fillAddress();
+    window.rentObjects = null;
+    window.validation.markValidInput(window.common.priceInput);
+    window.validation.markValidInput(window.common.titleInput);
   };
 
   var adFormReset = document.querySelector('.ad-form__reset');

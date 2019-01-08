@@ -31,7 +31,7 @@
 
   var cardTemplate = document.querySelector('#card');
 
-  var renderPopup = function (object) {
+  var renderPopup = function (rentOffer) {
     var mapFiltersConteiner = document.querySelector('.map__filters-container');
     var cardElement = cardTemplate.content.cloneNode(true);
     var popupTitle = cardElement.querySelector('.popup__title');
@@ -44,43 +44,43 @@
     var popupDescription = cardElement.querySelector('.popup__description');
     var popupPhotos = cardElement.querySelector('.popup__photos');
     var popupAvatar = cardElement.querySelector('.popup__avatar');
-    var objectFeatures = object.offer.features;
-    var objectPhotos = object.offer.photos;
-    popupTitle.textContent = object.offer.title;
-    popupAddress.textContent = object.offer.address;
-    popupPrice.textContent = object.offer.price + ' ₽/ночь';
-    popupType.textContent = typeMapping[object.offer.type];
-    popupCapacity.textContent = object.offer.rooms + ' комнаты для ' + object.offer.guests + ' гостей';
-    popupTime.textContent = 'Заезд после ' + object.offer.checkin + ' , выезд до ' + object.offer.checkout;
+    var rentOfferFeatures = rentOffer.offer.features;
+    var rentOfferPhotos = rentOffer.offer.photos;
+    popupTitle.textContent = rentOffer.offer.title;
+    popupAddress.textContent = rentOffer.offer.address;
+    popupPrice.textContent = rentOffer.offer.price + ' ₽/ночь';
+    popupType.textContent = typeMapping[rentOffer.offer.type];
+    popupCapacity.textContent = rentOffer.offer.rooms + ' комнаты для ' + rentOffer.offer.guests + ' гостей';
+    popupTime.textContent = 'Заезд после ' + rentOffer.offer.checkin + ' , выезд до ' + rentOffer.offer.checkout;
 
     var makeFeatureLi = function () {
-      for (var i = 0; i < objectFeatures.length; i++) {
+      for (var i = 0; i < rentOfferFeatures.length; i++) {
         var featureLi = document.createElement('li');
-        var featureClass = 'popup__feature--' + object.offer.features[i];
+        var featureClass = 'popup__feature--' + rentOffer.offer.features[i];
         featureLi.classList.add(featureClass, 'popup__feature');
         popupFeatures.appendChild(featureLi);
       }
     };
-    if (object.offer) {
+    if (rentOffer.offer) {
       makeFeatureLi();
     }
 
-    if (objectFeatures.length < 1) {
+    if (rentOfferFeatures.length < 1) {
       popupFeatures.classList.add('visually-hidden');
     }
-    if (objectPhotos.length < 1) {
+    if (rentOfferPhotos.length < 1) {
       popupPhotos.classList.add('visually-hidden');
     }
 
 
-    popupDescription.textContent = object.offer.description;
+    popupDescription.textContent = rentOffer.offer.description;
 
     var makePhotoImg = function () {
-      var photoList = object.offer.photos;
+      var photoList = rentOffer.offer.photos;
       for (var i = 0; i < photoList.length; i++) {
         var photoImg = document.createElement('img');
         photoImg.classList.add('popup__photo');
-        photoImg.src = object.offer.photos[i];
+        photoImg.src = rentOffer.offer.photos[i];
         photoImg.width = 45;
         photoImg.height = 40;
         photoImg.alt = 'Фотография жилья';
@@ -89,7 +89,7 @@
     };
     makePhotoImg();
 
-    popupAvatar.src = object.author.avatar;
+    popupAvatar.src = rentOffer.author.avatar;
     window.common.mapFaded.insertBefore(cardElement, mapFiltersConteiner);
   };
 

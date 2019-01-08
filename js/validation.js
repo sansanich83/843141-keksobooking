@@ -34,62 +34,62 @@
 
   var roomNumber = document.querySelector('#room_number');
   var capacity = document.querySelector('#capacity');
+  var capacityOptions = capacity.querySelectorAll('option');
+  var startCapacityOptions = capacity.querySelectorAll('option:not([value="1"])');
 
-  var validationMapping = function () {
-    if (roomNumber.value === '1' && capacity.value === '1') {
-      return true;
-    } else if (roomNumber.value === '1' && capacity.value === '2') {
-      return false;
-    } else if (roomNumber.value === '1' && capacity.value === '3') {
-      return false;
-    } else if (roomNumber.value === '1' && capacity.value === '0') {
-      return false;
-    } else if (roomNumber.value === '2' && capacity.value === '1') {
-      return true;
-    } else if (roomNumber.value === '2' && capacity.value === '2') {
-      return true;
-    } else if (roomNumber.value === '2' && capacity.value === '3') {
-      return false;
-    } else if (roomNumber.value === '2' && capacity.value === '0') {
-      return false;
-    } else if (roomNumber.value === '3' && capacity.value === '1') {
-      return true;
-    } else if (roomNumber.value === '3' && capacity.value === '2') {
-      return true;
-    } else if (roomNumber.value === '3' && capacity.value === '3') {
-      return true;
-    } else if (roomNumber.value === '3' && capacity.value === '0') {
-      return false;
-    } else if (roomNumber.value === '100' && capacity.value === '1') {
-      return false;
-    } else if (roomNumber.value === '100' && capacity.value === '2') {
-      return false;
-    } else if (roomNumber.value === '100' && capacity.value === '3') {
-      return false;
-    } else {
-      return true;
+  var deleteCapacityOption = function (options) {
+    options.forEach(function (item) {
+      item.remove();
+    });
+  };
+  deleteCapacityOption(startCapacityOptions);
+
+  roomNumber.addEventListener('input', function () {
+
+    if (roomNumber.value === '1') {
+      deleteCapacityOption(startCapacityOptions);
+    }
+    if (roomNumber.value === '2') {
+      deleteCapacityOption(capacityOptions);
+      capacity.appendChild(capacityOptions[1]);
+      capacity.appendChild(capacityOptions[2]);
+    }
+    if (roomNumber.value === '3') {
+      deleteCapacityOption(capacityOptions);
+      capacity.appendChild(capacityOptions[0]);
+      capacity.appendChild(capacityOptions[1]);
+      capacity.appendChild(capacityOptions[2]);
+    }
+    if (roomNumber.value === '100') {
+      deleteCapacityOption(capacityOptions);
+      capacity.appendChild(capacityOptions[3]);
+    }
+  });
+
+  var adFormSubmit = document.querySelector('.ad-form__submit');
+  adFormSubmit.addEventListener('click', function () {
+    var markInvalidInput = function (input) {
+      if (!input.checkValidity()) {
+        input.classList.add('input-invalid');
+      }
+    };
+    markInvalidInput(window.common.priceInput);
+    markInvalidInput(window.common.titleInput);
+  });
+
+  var markValidInput = function (input) {
+    if (input.checkValidity()) {
+      input.classList.remove('input-invalid');
     }
   };
 
-  roomNumber.addEventListener('input', function (evt) {
-    var target = evt.target;
-    if (!validationMapping()) {
-      target.setCustomValidity('в одну комнату помещается максимум 1 гость');
-      capacity.setCustomValidity('в одну комнату помещается максимум 1 гость');
-    } else {
-      target.setCustomValidity('');
-      capacity.setCustomValidity('');
-    }
+  window.common.adForm.addEventListener('input', function () {
+    markValidInput(window.common.priceInput);
+    markValidInput(window.common.titleInput);
   });
 
-  capacity.addEventListener('input', function (evt) {
-    var target = evt.target;
-    if (!validationMapping()) {
-      target.setCustomValidity('в одну комнату помещается максимум 1 гость');
-      roomNumber.setCustomValidity('в одну комнату помещается максимум 1 гость');
-    } else {
-      target.setCustomValidity('');
-      roomNumber.setCustomValidity('');
-    }
-  });
+  window.validation = {
+    markValidInput: markValidInput
+  };
+
 })();

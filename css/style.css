@@ -1249,6 +1249,10 @@ fieldset {
   opacity: 0.6;
 }
 
-#title:invalid, #price:invalid, #room_number:invalid, #capacity:invalid {
+.ad-form__element .input-invalid {
+  box-shadow: 0 0 5px 5px red;
+}
+
+.ad-form__element .input-invalid:focus {
   box-shadow: 0 0 5px 5px red;
 }

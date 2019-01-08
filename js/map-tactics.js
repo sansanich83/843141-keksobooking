@@ -96,7 +96,8 @@
     document.addEventListener('mouseup', onMouseUp);
 
     window.mapTactics = {
-      addMapPinListener: addMapPinListener
+      addMapPinListener: addMapPinListener,
+      fillAddress: fillAddress
     };
   });
 })();

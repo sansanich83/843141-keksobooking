@@ -12,12 +12,12 @@
   var filterElevator = document.querySelector('#filter-elevator');
   var filterConditioner = document.querySelector('#filter-conditioner');
 
-  var checkPrice = function (object) {
-    if ((filterPrice.value === 'middle') && (object.offer.price >= 10000) && (object.offer.price <= 50000)) {
+  var checkPrice = function (rentOffer) {
+    if ((filterPrice.value === 'middle') && (rentOffer.offer.price >= 10000) && (rentOffer.offer.price <= 50000)) {
       return true;
-    } else if ((filterPrice.value === 'low') && (object.offer.price < 10000)) {
+    } else if ((filterPrice.value === 'low') && (rentOffer.offer.price < 10000)) {
       return true;
-    } else if ((filterPrice.value === 'high') && (object.offer.price > 50000)) {
+    } else if ((filterPrice.value === 'high') && (rentOffer.offer.price > 50000)) {
       return true;
     } else if (filterPrice.value === 'any') {
       return true;
@@ -25,70 +25,70 @@
     return false;
   };
 
-  var checkType = function (object) {
-    return ((filterType.value === object.offer.type) || (filterType.value === 'any'));
+  var checkType = function (rentOffer) {
+    return ((filterType.value === rentOffer.offer.type) || (filterType.value === 'any'));
   };
 
-  var checkRoom = function (object) {
-    return ((parseInt(filterRoom.value, 10) === object.offer.rooms) || (filterRoom.value === 'any'));
+  var checkRoom = function (rentOffer) {
+    return ((parseInt(filterRoom.value, 10) === rentOffer.offer.rooms) || (filterRoom.value === 'any'));
   };
 
-  var checkGuest = function (object) {
-    return ((parseInt(filterGuest.value, 10) === object.offer.guests) || (filterGuest.value === 'any'));
+  var checkGuest = function (rentOffer) {
+    return ((parseInt(filterGuest.value, 10) === rentOffer.offer.guests) || (filterGuest.value === 'any'));
   };
 
-  var findFeature = function (object, feature) {
-    for (var i = 0; i < object.offer.features.length; i++) {
-      if (object.offer.features[i] === feature) {
+  var findFeature = function (rentOffer, feature) {
+    for (var i = 0; i < rentOffer.offer.features.length; i++) {
+      if (rentOffer.offer.features[i] === feature) {
         return true;
       }
     }
     return false;
   };
 
-  var checkWifi = function (object) {
+  var checkWifi = function (rentOffer) {
     if (filterWifi.checked) {
-      return (findFeature(object, 'wifi'));
+      return (findFeature(rentOffer, 'wifi'));
     } else {
       return true;
     }
   };
 
-  var checkDishwasher = function (object) {
+  var checkDishwasher = function (rentOffer) {
     if (filterDishwasher.checked) {
-      return (findFeature(object, 'dishwasher'));
+      return (findFeature(rentOffer, 'dishwasher'));
     } else {
       return true;
     }
   };
 
-  var checkParking = function (object) {
+  var checkParking = function (rentOffer) {
     if (filterParking.checked) {
-      return (findFeature(object, 'parking'));
+      return (findFeature(rentOffer, 'parking'));
     } else {
       return true;
     }
   };
 
-  var checkWasher = function (object) {
+  var checkWasher = function (rentOffer) {
     if (filterWasher.checked) {
-      return (findFeature(object, 'washer'));
+      return (findFeature(rentOffer, 'washer'));
     } else {
       return true;
     }
   };
 
-  var checkElevator = function (object) {
+  var checkElevator = function (rentOffer) {
     if (filterElevator.checked) {
-      return (findFeature(object, 'elevator'));
+      return (findFeature(rentOffer, 'elevator'));
     } else {
       return true;
     }
   };
 
-  var checkConditioner = function (object) {
+  var checkConditioner = function (rentOffer) {
     if (filterConditioner.checked) {
-      return (findFeature(object, 'conditioner'));
+      return (findFeature(rentOffer, 'conditioner'));
     } else {
       return true;
     }
@@ -96,10 +96,10 @@
 
   var onFilterChange = function () {
     window.deletePin();
-    window.filteredObjects = window.rentObjects.filter(function (object) {
-      return checkPrice(object) && checkType(object) && checkRoom(object) &&
-        checkGuest(object) && checkWifi(object) && checkDishwasher(object) &&
-        checkParking(object) && checkWasher(object) && checkElevator(object) && checkConditioner(object);
+    window.filteredObjects = window.rentObjects.filter(function (rentOffer) {
+      return checkPrice(rentOffer) && checkType(rentOffer) && checkRoom(rentOffer) &&
+        checkGuest(rentOffer) && checkWifi(rentOffer) && checkDishwasher(rentOffer) &&
+        checkParking(rentOffer) && checkWasher(rentOffer) && checkElevator(rentOffer) && checkConditioner(rentOffer);
     });
     if (window.filteredObjects.length > 5) {
       var sliceAmount = window.filteredObjects.length - 5;
