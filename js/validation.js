@@ -47,7 +47,8 @@
   roomNumber.addEventListener('input', function () {
 
     if (roomNumber.value === '1') {
-      deleteCapacityOption(startCapacityOptions);
+      deleteCapacityOption(capacityOptions);
+      capacity.appendChild(capacityOptions[2]);
     }
     if (roomNumber.value === '2') {
       deleteCapacityOption(capacityOptions);
