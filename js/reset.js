@@ -23,6 +23,10 @@
     window.rentObjects = null;
     window.validation.markValidInput(window.common.priceInput);
     window.validation.markValidInput(window.common.titleInput);
+    window.validation.markValidInput(window.validation.roomNumber);
+    window.validation.markValidInput(window.validation.capacity);
+    window.validation.disableCapacityOption(window.validation.startCapacityOptions);
+    window.validation.enableCapacityOption(window.validation.capacityOptions[2]);
   };
 
   var adFormReset = document.querySelector('.ad-form__reset');

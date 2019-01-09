@@ -102,8 +102,7 @@
         checkParking(rentOffer) && checkWasher(rentOffer) && checkElevator(rentOffer) && checkConditioner(rentOffer);
     });
     if (window.filteredObjects.length > 5) {
-      var sliceAmount = window.filteredObjects.length - 5;
-      window.filteredObjects = window.filteredObjects.slice(sliceAmount);
+      window.filteredObjects = window.filteredObjects.slice(0, 5);
     }
     window.ads.makeNewMapPin(window.filteredObjects.length, window.filteredObjects);
     var mapPins = document.querySelectorAll('.map__pin');
