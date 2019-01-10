@@ -1,6 +1,7 @@
 'use strict';
 (function () {
 
+  var isLoading;
   var URL = 'https://js.dump.academy/keksobooking';
   var getData = function (url, onLoad, onError) {
     var xhr = new XMLHttpRequest();
@@ -25,6 +26,7 @@
 
     xhr.timeout = 10000;
 
+    window.backend.isLoading = true;
     xhr.open('GET', url);
     xhr.send();
   };
@@ -53,7 +55,7 @@
     document.addEventListener('keydown', onEscCloseError);
     error.addEventListener('click', onClickCloseError);
   };
-
+  window.rentObjects = [];
   var onLoad = function (data) {
     window.rentObjects = data;
     var mapPins = document.querySelectorAll('.map__pin');
@@ -125,6 +127,7 @@
     onError: onError,
     onLoad: onLoad,
     getData: getData,
-    sendForm: sendForm
+    sendForm: sendForm,
+    isLoading: isLoading
   };
 })();

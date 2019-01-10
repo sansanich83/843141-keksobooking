@@ -83,7 +83,7 @@
     };
 
     var onMouseUp = function () {
-      if (!window.rentObjects) {
+      if (!window.backend.isLoading) {
         window.backend.getData('https://js.dump.academy/keksobooking/data', window.backend.onLoad, window.backend.onError);
       }
       window.activation.activateMap();

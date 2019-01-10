@@ -6,12 +6,14 @@
   var priceInput = document.querySelector('#price');
   var main = document.querySelector('main');
   var titleInput = document.querySelector('#title');
+  var mapFilters = document.querySelector('.map__filters');
   window.common = {
     mapPinMain: mapPinMain,
     mapFaded: mapFaded,
     adForm: adForm,
     priceInput: priceInput,
     main: main,
-    titleInput: titleInput
+    titleInput: titleInput,
+    mapFilters: mapFilters
   };
 })();
