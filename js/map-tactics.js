@@ -88,6 +88,7 @@
       }
       window.activation.activateMap();
       window.activation.toggleFieldsDesable(false);
+      window.activation.deactivateMapFiltersForm();
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
     };
