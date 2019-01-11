@@ -28,6 +28,7 @@
     window.validation.markValidInput(window.validation.capacity);
     window.validation.disableCapacityOption(window.validation.startCapacityOptions);
     window.validation.enableCapacityOption(window.validation.capacityOptions[2]);
+    window.activation.deactivateMapFiltersForm();
   };
 
   var adFormReset = document.querySelector('.ad-form__reset');
