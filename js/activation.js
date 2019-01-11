@@ -34,8 +34,8 @@
   };
 
   var toggleFieldsDesable = function (onOff) {
-    var selects = document.querySelectorAll('select');
-    var fieldSets = document.querySelectorAll('fieldset');
+    var selects = window.common.adForm.querySelectorAll('select');
+    var fieldSets = window.common.adForm.querySelectorAll('fieldset');
     for (var j = 0; j < selects.length; j++) {
       selects[j].disabled = onOff;
     }
@@ -45,6 +45,8 @@
   };
 
   toggleFieldsDesable(true);
+  deactivateMapFiltersForm();
+
   window.activation = {
     activateMap: activateMap,
     deactivateMap: deactivateMap,
