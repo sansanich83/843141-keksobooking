@@ -31,25 +31,22 @@
     xhr.send();
   };
 
-  var onEscCloseError = function (evt) {
-    if (evt.keyCode === 27) {
-      var error = document.querySelector('.error');
-      if (error) {
-        error.remove();
-        document.removeEventListener('keydown', onEscCloseError);
-      }
-    }
-  };
-
   var onError = function () {
+    window.backend.isLoading = false;
     var errorTemplate = document.querySelector('#error');
     var errorElement = errorTemplate.content.cloneNode(true);
-    window.common.main.appendChild(errorElement);
     var error = document.querySelector('.error');
     var errorButton = document.querySelector('.error__button');
+    window.common.main.appendChild(errorElement);
     var onClickCloseError = function () {
       error.remove();
       document.removeEventListener('keydown', onEscCloseError);
+    };
+    var onEscCloseError = function (evt) {
+      if (evt.keyCode === 27) {
+        error.remove();
+        document.removeEventListener('keydown', onEscCloseError);
+      }
     };
     errorButton.addEventListener('click', onClickCloseError);
     document.addEventListener('keydown', onEscCloseError);

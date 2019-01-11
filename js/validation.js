@@ -38,39 +38,9 @@
   var startCapacityOptions = capacity.querySelectorAll('option:not([value="1"])');
 
   var validationMapping = function () {
-    if (roomNumber.value === '1' && capacity.value === '1') {
-      return true;
-    } else if (roomNumber.value === '1' && capacity.value === '2') {
-      return false;
-    } else if (roomNumber.value === '1' && capacity.value === '3') {
-      return false;
-    } else if (roomNumber.value === '1' && capacity.value === '0') {
-      return false;
-    } else if (roomNumber.value === '2' && capacity.value === '1') {
-      return true;
-    } else if (roomNumber.value === '2' && capacity.value === '2') {
-      return true;
-    } else if (roomNumber.value === '2' && capacity.value === '3') {
-      return false;
-    } else if (roomNumber.value === '2' && capacity.value === '0') {
-      return false;
-    } else if (roomNumber.value === '3' && capacity.value === '1') {
-      return true;
-    } else if (roomNumber.value === '3' && capacity.value === '2') {
-      return true;
-    } else if (roomNumber.value === '3' && capacity.value === '3') {
-      return true;
-    } else if (roomNumber.value === '3' && capacity.value === '0') {
-      return false;
-    } else if (roomNumber.value === '100' && capacity.value === '1') {
-      return false;
-    } else if (roomNumber.value === '100' && capacity.value === '2') {
-      return false;
-    } else if (roomNumber.value === '100' && capacity.value === '3') {
-      return false;
-    } else {
-      return true;
-    }
+    return roomNumber.value === '100' || capacity.value === '0' ?
+      roomNumber.value === '100' && capacity.value === '0' :
+      parseInt(roomNumber.value, 10) >= parseInt(capacity.value, 10);
   };
 
   var disableCapacityOption = function (options) {
@@ -87,8 +57,8 @@
 
   var isNotForGuest = function () {
     if (!validationMapping()) {
-      capacity.setCustomValidity('Выберите в "Количестве мест" не для гостей');
-      roomNumber.setCustomValidity('Выберите другое количество комнат');
+      capacity.setCustomValidity('Выберите "не для гостей"');
+      roomNumber.setCustomValidity('Такое количество комнат не подходит для гостей');
       markInvalidRooms(roomNumber);
       markInvalidRooms(capacity);
     } else {
@@ -97,37 +67,9 @@
     }
 
   };
-
-  roomNumber.addEventListener('input', function () {
-
-    if (roomNumber.value === '1') {
-      disableCapacityOption(startCapacityOptions);
-      enableCapacityOption(capacityOptions[2]);
-      isNotForGuest();
-    }
-    if (roomNumber.value === '2') {
-      disableCapacityOption(capacityOptions);
-      enableCapacityOption(capacityOptions[1]);
-      enableCapacityOption(capacityOptions[2]);
-      isNotForGuest();
-    }
-    if (roomNumber.value === '3') {
-      disableCapacityOption(capacityOptions);
-      enableCapacityOption(capacityOptions[0]);
-      enableCapacityOption(capacityOptions[1]);
-      enableCapacityOption(capacityOptions[2]);
-      console.log(isNotForGuest());
-      isNotForGuest();
-    }
-    if (roomNumber.value === '100') {
-      disableCapacityOption(capacityOptions);
-      enableCapacityOption(capacityOptions[3]);
-    }
-  });
-
   var isWrongCapacity = function () {
     if (!validationMapping()) {
-      capacity.setCustomValidity('в одну комнату помещается максимум 1 гость');
+      capacity.setCustomValidity('Выберите количество гостей 1');
       roomNumber.setCustomValidity('в одну комнату помещается максимум 1 гость');
       markInvalidRooms(roomNumber);
       markInvalidRooms(capacity);
@@ -137,11 +79,9 @@
     }
   };
 
-
-
   var isTwoGuest = function () {
     if (!validationMapping()) {
-      capacity.setCustomValidity('2 комнаты подходят для 2 гостей или меньше');
+      capacity.setCustomValidity('Выберите количество гостей 2 или 1');
       roomNumber.setCustomValidity('2 комнаты подходят для 2 гостей или меньше');
       markInvalidRooms(roomNumber);
       markInvalidRooms(capacity);
@@ -153,7 +93,7 @@
 
   var isThreeGuest = function () {
     if (!validationMapping()) {
-      capacity.setCustomValidity('3 комнаты подходят для 3 гостей или меньше');
+      capacity.setCustomValidity('Выберите количество гостей 3, 2 или 1');
       roomNumber.setCustomValidity('3 комнаты подходят для 3 гостей или меньше');
       markInvalidRooms(roomNumber);
       markInvalidRooms(capacity);
@@ -162,6 +102,32 @@
       roomNumber.setCustomValidity('');
     }
   };
+  roomNumber.addEventListener('input', function () {
+
+    if (roomNumber.value === '1') {
+      disableCapacityOption(startCapacityOptions);
+      enableCapacityOption(capacityOptions[2]);
+      isWrongCapacity();
+    }
+    if (roomNumber.value === '2') {
+      disableCapacityOption(capacityOptions);
+      enableCapacityOption(capacityOptions[1]);
+      enableCapacityOption(capacityOptions[2]);
+      isTwoGuest();
+    }
+    if (roomNumber.value === '3') {
+      disableCapacityOption(capacityOptions);
+      enableCapacityOption(capacityOptions[0]);
+      enableCapacityOption(capacityOptions[1]);
+      enableCapacityOption(capacityOptions[2]);
+      isThreeGuest();
+    }
+    if (roomNumber.value === '100') {
+      disableCapacityOption(capacityOptions);
+      enableCapacityOption(capacityOptions[3]);
+      isNotForGuest();
+    }
+  });
 
   var adFormSubmit = document.querySelector('.ad-form__submit');
   adFormSubmit.addEventListener('click', function () {
