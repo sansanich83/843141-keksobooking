@@ -11,18 +11,15 @@
       if (xhr.status === 200) {
         onLoad(xhr.response);
       } else {
-        window.backend.isLoading = false;
         onError('Cтатус ответа: ' + xhr.status + ' ' + xhr.statusText);
       }
     });
 
     xhr.addEventListener('error', function () {
-      window.backend.isLoading = false;
       onError('Произошла ошибка соединения');
     });
 
     xhr.addEventListener('timeout', function () {
-      window.backend.isLoading = false;
       onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
     });
 

@@ -1,8 +1,8 @@
 'use strict';
 (function () {
 
-  var BOTTOM_LIMIT = 590;
-  var TOP_LIMIT = 87;
+  var BOTTOM_LIMIT = 544;
+  var TOP_LIMIT = 42;
   var address = document.querySelector('#address');
   var onEscPress = function (evt) {
     if (evt.keyCode === 27) {
@@ -17,7 +17,7 @@
   var fillAddress = function () {
     var mapPin = document.querySelector('.map__pin--main');
     var xCoordinate = mapPin.offsetLeft + 33;
-    var yCoordinate = mapPin.offsetTop + 41;
+    var yCoordinate = mapPin.offsetTop + 86;
     address.value = Math.round(xCoordinate) + ',' + Math.round(yCoordinate);
   };
   fillAddress();
@@ -84,7 +84,7 @@
 
     var onMouseUp = function () {
       if (!window.backend.isLoading) {
-        window.backend.getData('https://js.dump.academy/keksobooking/data1', window.backend.onLoad, window.backend.onError);
+        window.backend.getData('https://js.dump.academy/keksobooking/data', window.backend.onLoad, window.backend.onError);
       }
       window.activation.activateMap();
       window.activation.toggleFieldsDesable(false);
