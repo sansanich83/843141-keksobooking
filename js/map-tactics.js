@@ -2,7 +2,8 @@
 (function () {
 
   var BOTTOM_LIMIT = 544;
-  var TOP_LIMIT = 42;
+  var TOP_LIMIT = 44;
+  var LEFT_LIMIT = -33;
   var address = document.querySelector('#address');
   var onEscPress = function (evt) {
     if (evt.keyCode === 27) {
@@ -56,7 +57,6 @@
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
       var rightLimit = window.common.mapFaded.offsetWidth - 32;
-      var leftLimit = -32;
 
       var shift = {
         x: startPosition.x - moveEvt.clientX,
@@ -73,10 +73,10 @@
         top: window.common.mapPinMain.offsetTop - shift.y
       };
 
-      if ((newPosition.left < rightLimit) && (newPosition.left > leftLimit)) {
+      if ((newPosition.left < rightLimit) && (newPosition.left > LEFT_LIMIT)) {
         window.common.mapPinMain.style.left = (window.common.mapPinMain.offsetLeft - shift.x) + 'px';
       }
-      if ((newPosition.top < BOTTOM_LIMIT) && (newPosition.top > TOP_LIMIT)) {
+      if ((newPosition.top <= BOTTOM_LIMIT) && (newPosition.top >= TOP_LIMIT)) {
         window.common.mapPinMain.style.top = (window.common.mapPinMain.offsetTop - shift.y) + 'px';
       }
       fillAddress();
